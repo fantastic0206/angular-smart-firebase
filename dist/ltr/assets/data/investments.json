@@ -1,0 +1,52 @@
+[
+  {
+    "id": "001",
+    "sno": "1.",
+    "date": "01-01-2021",
+    "clientName": "Gowtham Kumar",
+    "investedAmount": "100000",
+    "percentage": "8",
+    "status": "Active",
+    "uniqueID": "Abc1234"
+  },
+  {
+    "id": "002",
+    "sno": "2.",
+    "date": "01-01-2021",
+    "clientName": "Gowtham Kumar",
+    "investedAmount": "100000",
+    "percentage": "8",
+    "status": "Active",
+    "uniqueID": "Abc1234"
+  },
+  {
+    "id": "003",
+    "sno": "3.",
+    "date": "01-01-2021",
+    "clientName": "Gowtham Kumar",
+    "investedAmount": "100000",
+    "percentage": "8",
+    "status": "Active",
+    "uniqueID": "Abc1234"
+  },
+  {
+    "id": "004",
+    "sno": "4.",
+    "date": "01-01-2021",
+    "clientName": "Gowtham Kumar",
+    "investedAmount": "100000",
+    "percentage": "8",
+    "status": "Active",
+    "uniqueID": "Abc1234"
+  },
+  {
+    "id": "005",
+    "sno": "5.",
+    "date": "01-01-2021",
+    "clientName": "Gowtham Kumar",
+    "investedAmount": "100000",
+    "percentage": "8",
+    "status": "Active",
+    "uniqueID": "Abc1234"
+  }
+]

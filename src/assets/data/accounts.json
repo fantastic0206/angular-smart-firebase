@@ -1,0 +1,22 @@
+[
+  {
+    "id": "001",
+    "sno": "1.",
+    "date": "01-01-2021",
+    "accountName": "Gowtham Kumar",
+    "tradingClient": "Zerodha",
+    "amount": "1500000",
+    "status": "Active",
+    "flagName": "Account"
+  },
+  {
+    "id": "002",
+    "sno": "2.",
+    "date": "01-01-2021",
+    "accountName": "Besedin",
+    "tradingClient": "Zerodha",
+    "amount": "250000",
+    "status": "Disabled",
+    "flagName": "Account"
+  }
+]

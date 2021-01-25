@@ -1,0 +1,122 @@
+<section class="content" style="margin-top: 10px">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Dashboard</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/dashboard">
+                <i class="fas fa-home"></i></a>
+            </li>
+            <a class="active" style="color: #444444; padding: 3px 0;">Dashboard</a>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Widgets -->
+    <div class="row">
+      <div class="col-lg-4 col-sm-6">
+        <div class="info-box7 l-bg-purple order-info-box7">
+          <div class="info-box7-block">
+            <h6 class="m-b-20">Investment</h6>
+            <h2 class="text-right"><i class="fas fa-money-bill pull-left"></i><span>RS. 50000000</span></h2>
+            <!-- <p class="m-b-0">18% Higher Then Last Month</p> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="info-box7 l-bg-blue order-info-box7">
+          <div class="info-box7-block">
+            <h6 class="m-b-20">Profit & Loss</h6>
+            <h2 class="text-right"><i class="fas fa-business-time pull-left"></i><span>RS. 500000</span></h2>
+            <!-- <p class="m-b-0">21% Higher Then Last Month</p> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="info-box7 l-bg-green order-info-box7">
+          <div class="info-box7-block">
+            <h6 class="m-b-20">Withdrawal</h6>
+            <h2 class="text-right"><i class="fas fa-money-check pull-left"></i><span>RS. 50000</span></h2>
+            <!-- <p class="m-b-0">37% Higher Then Last Month</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-sm-6">
+        <div class="info-box7 l-bg-blue order-info-box7">
+          <div class="info-box7-block">
+            <h6 class="m-b-20">Accounts</h6>
+            <h2 class="text-right"><i class="fas fa-user-check pull-left"></i><span>10</span></h2>
+            <!-- <p class="m-b-0">21% Higher Then Last Month</p> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="info-box7 l-bg-green order-info-box7">
+          <div class="info-box7-block">
+            <h6 class="m-b-20">Payments</h6>
+            <h2 class="text-right"><i class="fab fa-cc-amazon-pay pull-left"></i><span>RS. 50000</span></h2>
+            <!-- <p class="m-b-0">37% Higher Then Last Month</p> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <div class="info-box7 l-bg-orange order-info-box7">
+          <div class="info-box7-block">
+            <h6 class="m-b-20">Clients</h6>
+            <h2 class="text-right"><i class="fas fa-users pull-left"></i><span>15</span></h2>
+            <!-- <p class="m-b-0">10% Higher Then Last Month</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Widgets -->
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>P & L Report</h2>
+            <!-- <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu> -->
+          </div>
+          <div class="body">
+            <apx-chart [series]="barChartOptions2.series" [chart]="barChartOptions2.chart"
+              [dataLabels]="barChartOptions2.dataLabels" [plotOptions]="barChartOptions2.plotOptions"
+              [yaxis]="barChartOptions2.yaxis" [xaxis]="barChartOptions2.xaxis" [fill]="barChartOptions2.fill"></apx-chart>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Payments Report</h2>
+            <!-- <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu> -->
+          </div>
+          <div class="body">
+            <apx-chart [series]="barChartOptions1.series" [chart]="barChartOptions1.chart"
+              [dataLabels]="barChartOptions1.dataLabels" [plotOptions]="barChartOptions1.plotOptions"
+              [yaxis]="barChartOptions1.yaxis" [xaxis]="barChartOptions1.xaxis" [fill]="barChartOptions1.fill"></apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,122 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <!-- <img [src]='teachers.img' alt="avatar"> -->
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 font-17">
+            {{dialogTitle}}</div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="proForm" (ngSubmit)="submit">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>S.NO</mat-label>
+            <input matInput formControlName="sno" required>
+            <mat-icon matSuffix>note</mat-icon>
+            <mat-error *ngIf="proForm.get('sno').hasError('required')">
+              sno is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Client Name</mat-label>
+            <input matInput formControlName="clientName" required>
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-error *ngIf="proForm.get('clientName').hasError('required')">
+              Client Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>User Name</mat-label>
+            <input matInput formControlName="userName" required>
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-error *ngIf="proForm.get('userName').hasError('required')">
+              User Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" required>
+            <mat-icon matSuffix>lock</mat-icon>
+            <mat-error *ngIf="proForm.get('password').hasError('required')">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>UniqueID</mat-label>
+            <input matInput formControlName="uniqueID" type="number">
+            <mat-icon matSuffix>money</mat-icon>
+            <mat-error *ngIf="proForm.get('uniqueID').hasError('required')">
+              UniqueID is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>status</mat-label>
+            <mat-select formControlName="status" required>
+              <mat-option [value]="'Active'">
+                Active
+              </mat-option>
+              <mat-option [value]="'Disabled'">
+                Disabled
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="proForm.get('status').hasError('required')">
+              Status is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="status" required>
+              <mat-option [value]="'Admin'">
+                Admin
+              </mat-option>
+              <mat-option [value]="'Moderator'">
+                Moderator
+              </mat-option>
+              <mat-option [value]="'User'">
+                User
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="proForm.get('role').hasError('required')">
+              Role is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" [type]="submit" [disabled]="!proForm.valid" [mat-dialog-close]="1"
+              (click)="confirmAdd()">Save</button>
+            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

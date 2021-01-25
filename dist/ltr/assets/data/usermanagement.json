@@ -1,0 +1,32 @@
+[
+  {
+    "id": "001",
+    "sno": "1.",
+    "clientName": "Gowtham",
+    "userName": "Gow1989",
+    "password": "Hai123",
+    "uniqueID": "Abc12345",
+    "status": "Active",
+    "role": "Admin"
+  },
+  {
+    "id": "002",
+    "sno": "2.",
+    "clientName": "Besedin",
+    "userName": "Besedin",
+    "password": "besedin123",
+    "uniqueID": "Long34",
+    "status": "Disabled",
+    "role": "Moderator"
+  },
+  {
+    "id": "003",
+    "sno": "3.",
+    "clientName": "Kumar",
+    "userName": "Kum1234",
+    "password": "Kumar",
+    "uniqueID": "kum1234",
+    "status": "User",
+    "role": "Active"
+  }
+]

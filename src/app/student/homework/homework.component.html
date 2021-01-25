@@ -1,0 +1,106 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Homework</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/patient/dashboard">
+                <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item active">Homework</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="responsive_table">
+          <div class="materialTableHeader">
+            <div class="row">
+              <div class="col-8">
+                <ul class="header-buttons-left ml-0">
+                  <li class="dropdown">
+                    <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                    <input matInput (keyup)="applyFilter($event)" type="text" class="browser-default search-field"
+                      placeholder="Search">
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="example-container mat-elevation-z8">
+
+            <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+              </ng-container>
+
+              <!-- Class Column -->
+              <ng-container matColumnDef="class">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Class </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.class}} </mat-cell>
+              </ng-container>
+
+              <!-- Section Column -->
+              <ng-container matColumnDef="section">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Section </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.section}} </mat-cell>
+              </ng-container>
+
+              <!-- Subject Column -->
+              <ng-container matColumnDef="subject">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Subject </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.subject}} </mat-cell>
+              </ng-container>
+
+              <!-- Homework Date Column -->
+              <ng-container matColumnDef="homeworkDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Homework Date</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.homeworkDate | date: 'MM/dd/yyyy' }}
+                </mat-cell>
+              </ng-container>
+
+              <!-- Submission Date Column -->
+              <ng-container matColumnDef="submissionDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Submission Date</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.submissionDate | date: 'MM/dd/yyyy' }}
+                </mat-cell>
+              </ng-container>
+
+              <!-- Evalution Date Column -->
+              <ng-container matColumnDef="evalutionDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Evalution Date</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.evalutionDate | date: 'MM/dd/yyyy' }}
+                </mat-cell>
+              </ng-container>
+
+              <!-- status Column -->
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+              </ng-container>
+              <!-- actions -->
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+              <mat-row *matRowDef="let row; columns: displayedColumns;" [style.cursor]="'pointer'" matRipple>
+              </mat-row>
+            </mat-table>
+            <div class="no-results" [style.display]="dataLength == 0 ? '' : 'none'">
+              No results
+            </div>
+
+            <mat-paginator #paginator [length]="dataLength" [pageIndex]="0" [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

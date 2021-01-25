@@ -1,0 +1,725 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Dashboard</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/admin/dashboard/main">
+                <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Widgets -->
+    <div class="row ">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+          <div class="card-statistic-4">
+            <div class="align-items-center justify-content-between">
+              <div class="row ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 card-spacing">
+                  <div class="card-content">
+                    <h5 class="font-15">New Students</h5>
+                    <h2 class="mb-3 font-18">1,025</h2>
+                    <p class="mb-0"><span class="col-green">10%</span> Increase</p>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                  <div class="banner-img">
+                    <img src="assets/images/banner/1.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+          <div class="card-statistic-4">
+            <div class="align-items-center justify-content-between">
+              <div class="row ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 card-spacing">
+                  <div class="card-content">
+                    <h5 class="font-15"> Total Courses</h5>
+                    <h2 class="mb-3 font-18">47</h2>
+                    <p class="mb-0"><span class="col-orange">09%</span> Decrease</p>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                  <div class="banner-img">
+                    <img src="assets/images/banner/2.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+          <div class="card-statistic-4">
+            <div class="align-items-center justify-content-between">
+              <div class="row ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 card-spacing">
+                  <div class="card-content">
+                    <h5 class="font-15">Awards</h5>
+                    <h2 class="mb-3 font-18">128</h2>
+                    <p class="mb-0"><span class="col-green">18%</span>
+                      Increase</p>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                  <div class="banner-img">
+                    <img src="assets/images/banner/3.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+          <div class="card-statistic-4">
+            <div class="align-items-center justify-content-between">
+              <div class="row ">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 card-spacing">
+                  <div class="card-content">
+                    <h5 class="font-15">Revenue</h5>
+                    <h2 class="mb-3 font-18">$48,697</h2>
+                    <p class="mb-0"><span class="col-green">42%</span> Increase</p>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                  <div class="banner-img">
+                    <img src="assets/images/banner/4.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #END# Widgets -->
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>
+              Students Survay</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div id="chart">
+            <apx-chart [series]="areaChartOptions.series" [chart]="areaChartOptions.chart"
+              [xaxis]="areaChartOptions.xaxis" [yaxis]="areaChartOptions.yaxis" [colors]="areaChartOptions.colors"
+              [stroke]="areaChartOptions.stroke" [legend]="areaChartOptions.legend" [tooltip]="areaChartOptions.tooltip"
+              [dataLabels]="areaChartOptions.dataLabels"></apx-chart>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Student Performance Chart</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div class="body">
+            <apx-chart [series]="barChartOptions.series" [chart]="barChartOptions.chart"
+              [dataLabels]="barChartOptions.dataLabels" [plotOptions]="barChartOptions.plotOptions"
+              [yaxis]="barChartOptions.yaxis" [xaxis]="barChartOptions.xaxis" [fill]="barChartOptions.fill"></apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="course-card">
+          <div class="course-card-body">
+            <div class="course-card-top-overflow text-white">
+              <img src="assets/images/banner/course1.png">
+            </div>
+            <div class="post-user mt-3">
+              <span class="avtar-img">
+                <img class="img-circle" src="assets/images/user/user1.jpg" alt="...">
+              </span>
+              <h6 class="mb-xs mt-xs"> PHP Development Course</h6>
+              <p class="text-muted"><time>25 mins</time></p>
+            </div>
+            <h6>John Deo</h6>
+            <p>In this course, you'll explore the basic structure of a web application, and how a web
+              browser interacts with a web server,as well as the basic syntax and data structures of the
+              PHP language </p>
+          </div>
+          <footer class="bg-body-light">
+            <ul class="post-links no-separator">
+              <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> 368</span></a></li>
+              <li><a href="#"><i class="far fa-comment-dots"></i> 48</a></li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="course-card">
+          <div class="course-card-body">
+            <div class="course-card-top-overflow text-white">
+              <img src="assets/images/banner/course2.png">
+            </div>
+            <div class="post-user mt-3">
+              <span class="avtar-img">
+                <img class="img-circle" src="assets/images/user/user2.jpg" alt="...">
+              </span>
+              <h6 class="mb-xs mt-xs"> Java Development Course</h6>
+              <p class="text-muted"><time>45 mins</time></p>
+            </div>
+            <h6>Sarah Smith</h6>
+            <p>In this course, you'll explore the basic structure of a web application, and how a web
+              browser interacts with a web server,as well as the basic syntax and data structures of the
+              PHP language </p>
+          </div>
+          <footer class="bg-body-light">
+            <ul class="post-links no-separator">
+              <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> 2,951</span></a></li>
+              <li><a href="#"><i class="far fa-comment-dots"></i> 254</a></li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="course-card">
+          <div class="course-card-body">
+            <div class="course-card-top-overflow text-white">
+              <img src="assets/images/banner/course3.png">
+            </div>
+            <div class="post-user mt-3">
+              <span class="avtar-img">
+                <img class="img-circle" src="assets/images/user/user3.jpg" alt="...">
+              </span>
+              <h6 class="mb-xs mt-xs"> Angular Course</h6>
+              <p class="text-muted"><time>25 mins</time></p>
+            </div>
+            <h6>Airi Satou</h6>
+            <p>In this course, you'll explore the basic structure of a web application, and how a web
+              browser interacts with a web server,as well as the basic syntax and data structures of the
+              PHP language </p>
+          </div>
+          <footer class="bg-body-light">
+            <ul class="post-links no-separator">
+              <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> 7,568</span></a></li>
+              <li><a href="#"><i class="far fa-comment-dots"></i> 457</a></li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="course-card">
+          <div class="course-card-body">
+            <div class="course-card-top-overflow text-white">
+              <img src="assets/images/banner/course4.png">
+            </div>
+            <div class="post-user mt-3">
+              <span class="avtar-img">
+                <img class="img-circle" src="assets/images/user/user4.jpg" alt="...">
+              </span>
+              <h6 class="mb-xs mt-xs"> SEO Optimization Course</h6>
+              <p class="text-muted"><time>30 mins</time></p>
+            </div>
+            <h6>Ashton Cox</h6>
+            <p>In this course, you'll explore the basic structure of a web application, and how a web
+              browser interacts with a web server,as well as the basic syntax and data structures of the
+              PHP language </p>
+          </div>
+          <footer class="bg-body-light">
+            <ul class="post-links no-separator">
+              <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> 1,258</span></a></li>
+              <li><a href="#"><i class="far fa-comment-dots"></i>158</a></li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="card">
+          <div class="header">
+            <h2>Sport Achievements</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Patient Name</th>
+                    <th>Assigned Coach</th>
+                    <th>Date</th>
+                    <th>Sport Name</th>
+                    <th>Actions </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user1.jpg" alt="">
+                    </td>
+                    <td>John Doe</td>
+                    <td><a href="mailto:test@gmail.com"> Jacob Ryan </a></td>
+                    <td>12/05/2016 </td>
+                    <td>
+                      <div class="badge col-red">Cricket</div>
+                    </td>
+                    <td>
+                      <button mat-icon-button>
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button>
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user2.jpg" alt="">
+                    </td>
+                    <td>Sarah Smith</td>
+                    <td><a href="mailto:test@gmail.com"> Rajesh </a></td>
+                    <td>12/05/2016 </td>
+                    <td>
+                      <div class="badge col-green">Boxing</div>
+                    </td>
+                    <td>
+                      <button mat-icon-button>
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button>
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user3.jpg" alt="">
+                    </td>
+                    <td>Airi Satou</td>
+                    <td><a href="mailto:test@gmail.com"> Jay Soni </a></td>
+                    <td>12/05/2016 </td>
+                    <td>
+                      <div class="badge col-purple">Tennis</div>
+                    </td>
+                    <td>
+                      <button mat-icon-button>
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button>
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user4.jpg" alt="">
+                    </td>
+                    <td>Angelica Ramos</td>
+                    <td><a href="mailto:test@gmail.com"> John Deo </a></td>
+                    <td>12/05/2016 </td>
+                    <td>
+                      <div class="badge col-brown">Hockey</div>
+                    </td>
+                    <td>
+                      <button mat-icon-button>
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button>
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user5.jpg" alt="">
+                    </td>
+                    <td>Ashton Cox</td>
+                    <td><a href="mailto:test@gmail.com"> Megha Trivedi </a></td>
+                    <td>12/05/2016 </td>
+                    <td>
+                      <div class="badge col-orange">Yoga</div>
+                    </td>
+                    <td>
+                      <button mat-icon-button>
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button>
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user8.jpg" alt="">
+                    </td>
+                    <td>Cara Stevens</td>
+                    <td><a href="mailto:test@gmail.com"> Sarah Smith </a></td>
+                    <td>12/05/2016 </td>
+                    <td>
+                      <div class="badge col-cyan">Gymnastics</div>
+                    </td>
+                    <td>
+                      <button mat-icon-button>
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button>
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="card">
+          <div class="header">
+            <h2>Teachers List</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Teacher Name</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user5.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> Jay Soni
+                        </a></div>
+                      <div class="text-job font-11">(MA,B.Ed)</div>
+                    </td>
+                    <td>
+                      <div class="badge col-green">Available</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user6.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> Sarah Smith
+                        </a></div>
+                      <div class="text-job font-11">(B.com,PHD)</div>
+                    </td>
+                    <td>
+                      <div class="badge col-red">Absend</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user3.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com">Megha Trivedi
+                        </a></div>
+                      <div class="text-job font-11">(M.Ed.)</div>
+                    </td>
+                    <td>
+                      <div class="badge col-green">Available</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user2.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> John Deo
+                        </a></div>
+                      <div class="text-job font-11">(B.Sc.,M.Sc.)</div>
+                    </td>
+                    <td>
+                      <div class="badge col-green">Available</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user1.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com">Jacob Ryan
+                        </a></div>
+                      <div class="text-job font-11">(CP.Ed.)</div>
+                    </td>
+                    <td>
+                      <div class="badge col-red">Absend</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user8.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com">Jay Soni
+                        </a></div>
+                      <div class="text-job font-11">(MA, B.Ed.)</div>
+                    </td>
+                    <td>
+                      <div class="badge col-green">Available</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="header">
+            <h2>New Student List</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Branch</th>
+                    <th>Date Of Admition</th>
+                    <th>Fees Receipt</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user8.jpg" alt="">
+                    </td>
+                    <td>John Deo</td>
+                    <td>(123)123456</td>
+                    <td>9946 Baker Rd. Marysville,</td>
+                    <td>Mechanical</td>
+                    <td>12-08-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user2.jpg" alt="">
+                    </td>
+                    <td>Jens Brincker</td>
+                    <td>(123)123456</td>
+                    <td>193 S. Harrison Drive</td>
+                    <td>Science</td>
+                    <td>18-09-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user3.jpg" alt="">
+                    </td>
+                    <td>Mark Hay</td>
+                    <td>(123)123456</td>
+                    <td>8949 Golf St. Palm Coast</td>
+                    <td>Commerce</td>
+                    <td>05-08-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user4.jpg" alt="">
+                    </td>
+                    <td>Anthony Davie</td>
+                    <td>(123)123456</td>
+                    <td>23 Ohio Court Alexandria</td>
+                    <td>M.B.A.</td>
+                    <td>22-07-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user6.jpg" alt="">
+                    </td>
+                    <td>Alan Gilchrist</td>
+                    <td>(123)123456</td>
+                    <td>338 North Cleveland Rd</td>
+                    <td>Civil</td>
+                    <td>20-09-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user7.jpg" alt="">
+                    </td>
+                    <td>Sue Woodger</td>
+                    <td>(123)123456</td>
+                    <td>753 Forest Lane</td>
+                    <td>M.C.A.</td>
+                    <td>17-10-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user8.jpg" alt="">
+                    </td>
+                    <td>David Perry</td>
+                    <td>(123)123456</td>
+                    <td>7909 W. Sunnyslope St.</td>
+                    <td>Computer</td>
+                    <td>04-11-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user9.jpg" alt="">
+                    </td>
+                    <td>Sneha Pandit</td>
+                    <td>(123)123456</td>
+                    <td>7361 Dunbar Street</td>
+                    <td>Mechanical</td>
+                    <td>11-01-2019</td>
+                    <td>
+                      <i class="far fa-file-pdf tbl-pdf"></i>
+                    </td>
+                    <td>
+                      <button mat-icon-button class="btn-tbl-edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button class="btn-tbl-delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

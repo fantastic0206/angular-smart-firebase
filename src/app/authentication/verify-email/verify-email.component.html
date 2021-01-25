@@ -1,0 +1,35 @@
+<div class="auth-container">
+  <div class="row auth-main">
+    <div class="col-sm-6 px-0 d-none d-sm-block">
+      <div
+        class="left-img"
+        style="background-image: url(assets/images/pages/bg-02.png);"
+      ></div>
+    </div>
+    <div class="col-sm-6 auth-form-section">
+      <div class="form-section">
+        <div class="auth-wrapper">
+          <h2 class="welcome-msg">Thank You For Registering</h2>
+          <p class="auth-signup-text text-muted">
+            We have sent a confirmation email to <strong>{{userEmail}}</strong>.
+            Please check your email and click on the link to verfiy your email address.
+          </p>
+          <form
+            class="validate-form"
+          >
+            <div class="container-auth-form-btn">
+              <button
+                mat-flat-button
+                color="primary"
+                class="auth-form-btn"
+                (click)="authService.SendVerificationMail()"
+                >
+                Resend Verification Email
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

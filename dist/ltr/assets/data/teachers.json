@@ -1,0 +1,57 @@
+[
+  {
+    "id": "001",
+    "sno": "1.",
+    "date": "29-Dec",
+    "scriptType": "Futures",
+    "scriptName": "IGL",
+    "positionType": "Long",
+    "holdingPeriod": "6 days",
+    "profitLoss": "5625",
+    "accountName": "Musthafa"
+  },
+  {
+    "id": "002",
+    "sno": "2.",
+    "date": "29-Dec",
+    "scriptType": "Futures",
+    "scriptName": "Indusind",
+    "positionType": "Long",
+    "holdingPeriod": "6 days",
+    "profitLoss": "16620",
+    "accountName": "Musthafa"
+  },
+  {
+    "id": "003",
+    "sno": "3.",
+    "date": "29-Dec",
+    "scriptType": "Holding",
+    "scriptName": "LGBBROSLTD",
+    "positionType": "Long",
+    "holdingPeriod": "5 days",
+    "profitLoss": "9400",
+    "accountName": "Gowri Shanker"
+  },
+  {
+    "id": "004",
+    "sno": "4.",
+    "date": "29-Dec",
+    "scriptType": "Futures",
+    "scriptName": "Escorts",
+    "positionType": "Long",
+    "holdingPeriod": "3 days",
+    "profitLoss": "4300",
+    "accountName": "Gowri Shanker"
+  },
+  {
+    "id": "005",
+    "sno": "5.",
+    "date": "29-Dec",
+    "scriptType": "Futures",
+    "scriptName": "Axis Bank",
+    "positionType": "Long",
+    "holdingPeriod": "6 days",
+    "profitLoss": "1600",
+    "accountName": "Karan"
+  }
+]
