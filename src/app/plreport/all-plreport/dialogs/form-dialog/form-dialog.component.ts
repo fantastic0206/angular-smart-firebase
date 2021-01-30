@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Teachers } from '../../teachers.model';
 import { formatDate } from '@angular/common';
+import { AngularFirestore } from "@angular/fire/firestore";
 
 
 @Component({
@@ -19,20 +20,48 @@ import { formatDate } from '@angular/common';
 export class FormDialogComponent implements OnInit {
   action: string;
   dialogTitle: string;
-  proForm: FormGroup;
   teachers: Teachers;
+  docId: string = "";
+
+  proForm = new FormGroup({
+    date: new FormControl("date"),
+    scriptType: new FormControl("scriptType"),
+    scriptName: new FormControl("scriptName"),
+    positionType: new FormControl("positionType"),
+    holdingPeriod: new FormControl("holdingPeriod"),
+    profitLoss: new FormControl("profitLoss"),
+    accountName: new FormControl("accountName"),
+  });
 
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public teachersService: TeachersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private firestore: AngularFirestore
   ) {
     // Set the defaults
     this.action = data.action;
     if (this.action === 'edit') {
       this.dialogTitle = data.teachers.scriptName;
       this.teachers = data.teachers;
+      this.firestore
+        .collection("plreport", (ref) =>
+          ref
+            .where("scriptType", "==", data.teachers.scriptType)
+            .where("scriptName", "==", data.teachers.scriptName)
+            .where("date", "==", data.teachers.date)
+            .where("positionType", "==", data.teachers.positionType)
+            .where("holdingPeriod", "==", data.teachers.holdingPeriod)
+            .where("profitLoss", "==", data.teachers.profitLoss)
+            .where("accountName", "==", data.teachers.accountName)
+        )
+        .get()
+        .subscribe((ss) => {
+          ss.docs.forEach((doc) => {
+            this.docId = doc.id;
+          });
+        });
     } else {
       this.dialogTitle = 'New P&LReport';
       this.teachers = new Teachers({});
@@ -53,15 +82,11 @@ export class FormDialogComponent implements OnInit {
   createContactForm(): FormGroup {
     return this.fb.group({
       id: [this.teachers.id],
-      sno: [this.teachers.sno],
       // email: [
       //   this.teachers.email,
       //   [Validators.required, Validators.email, Validators.minLength(5)],
       // ],
-      date: [
-        formatDate(this.teachers.date, 'yyyy-MM-dd', 'en'),
-        [Validators.required],
-      ],
+      date: [this.teachers.date],
       scriptType: [this.teachers.scriptType],
       scriptName: [this.teachers.scriptName],
       positionType: [this.teachers.positionType],
@@ -77,7 +102,43 @@ export class FormDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   public confirmAdd(): void {
-    this.teachersService.addTeachers(this.proForm.getRawValue());
+    // console.log(this.proForm.value.date);
+    if (this.action === "add") {
+      this.firestore
+        .collection("plreport")
+        .add({
+          id: this.teachers.id,
+          date: formatDate(this.proForm.value.date, "yyyy-MM-dd", "en"),
+          accountName: this.proForm.value.accountName,
+          scriptType: this.proForm.value.scriptType,
+          scriptName: this.proForm.value.scriptName,
+          positionType: this.proForm.value.positionType,
+          holdingPeriod: this.proForm.value.holdingPeriod,
+          profitLoss: this.proForm.value.profitLoss,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      this.teachersService.addTeachers(this.proForm.getRawValue());
+    } else if (this.action === "edit") {
+      this.firestore
+        .collection("plreport")
+        .doc(this.docId)
+        .update({
+          id: this.teachers.id,
+          date: formatDate(this.proForm.value.date, "yyyy-MM-dd", "en"),
+          accountName: this.proForm.value.accountName,
+          scriptType: this.proForm.value.scriptType,
+          scriptName: this.proForm.value.scriptName,
+          positionType: this.proForm.value.positionType,
+          holdingPeriod: this.proForm.value.holdingPeriod,
+          profitLoss: this.proForm.value.profitLoss,
+        });
+      this.teachersService.addTeachers(this.proForm.getRawValue());
+    }
   }
 
   ngOnInit(): void {

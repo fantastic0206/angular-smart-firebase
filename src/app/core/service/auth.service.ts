@@ -8,6 +8,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
 import { environment } from 'src/environments/environment';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -33,23 +34,24 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(username, password)
-    .then(async (result) => {
-      await localStorage.setItem('currentUser', JSON.stringify(result.user));
+  login(userData) {
+      localStorage.setItem('currentUser', JSON.stringify(userData));
       this.currentUserSubject = new BehaviorSubject<User>(
         JSON.parse(localStorage.getItem('currentUser'))
       );
       this.currentUser = this.currentUserSubject.asObservable();
       // this.currentUserSubject.next(result.user);
-      this.ngZone.run(() => {
-        this.router.navigate(['dashboard']);
-      });
+      if(userData.role === 'Admin' || userData.role === "Moderator") {
+        this.ngZone.run(() => {
+          this.router.navigate(['dashboard']);
+        });
+      } else if(userData.role === 'User') {
+        this.ngZone.run(() => {
+          this.router.navigate(['report']);
+        });
+      }
       // return result.user;
       // this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error.message)
-    })
     // return this.http
     //   .post<any>(`${environment.apiUrl}/authenticate`, {
     //     username,
@@ -83,6 +85,15 @@ export class AuthService {
       }).catch((error) => {
         window.alert(error.message)
       })
+  }
+  getUserData() {
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("existed Users", user);
+    } else {
+      // No user is signed in.
+    }
+  });
   }
 
   SendVerificationMail() {

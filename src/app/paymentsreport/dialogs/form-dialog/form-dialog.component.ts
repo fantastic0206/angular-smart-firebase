@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Teachers } from '../../teachers.model';
 import { formatDate } from '@angular/common';
+import { AngularFirestore } from "@angular/fire/firestore";
 
 @Component({
   selector: 'app-form-dialog',
@@ -18,20 +19,41 @@ import { formatDate } from '@angular/common';
 export class FormDialogComponent implements OnInit {
   action: string;
   dialogTitle: string;
-  proForm: FormGroup;
   teachers: Teachers;
+  docId: string = "";
+
+  proForm = new FormGroup({
+    date: new FormControl("date"),
+    accountName: new FormControl("accountName"),
+    paidAmount: new FormControl("paidAmount"),
+  });
 
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public teachersService: TeachersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private firestore: AngularFirestore
   ) {
     // Set the defaults
     this.action = data.action;
     if (this.action === 'edit') {
       this.dialogTitle = data.teachers.accountName;
       this.teachers = data.teachers;
+      this.firestore
+        .collection("paymentreport", (ref) =>
+          ref
+            .where("accountName", "==", data.teachers.accountName)
+            .where("paidAmount", "==", data.teachers.paidAmount)
+            .where("date", "==", data.teachers.date)
+            .where("id", "==", data.teachers.id)
+        )
+        .get()
+        .subscribe((ss) => {
+          ss.docs.forEach((doc) => {
+            this.docId = doc.id;
+          });
+        });
     } else {
       this.dialogTitle = 'New Payment';
       this.teachers = new Teachers({});
@@ -52,15 +74,11 @@ export class FormDialogComponent implements OnInit {
   createContactForm(): FormGroup {
     return this.fb.group({
       id: [this.teachers.id],
-      sno: [this.teachers.sno],
       // email: [
       //   this.teachers.email,
       //   [Validators.required, Validators.email, Validators.minLength(5)],
       // ],
-      date: [
-        formatDate(this.teachers.date, 'yyyy-MM-dd', 'en'),
-        [Validators.required],
-      ],
+      date: [this.teachers.date],
       accountName: [this.teachers.accountName],
       paidAmount: [this.teachers.paidAmount]
     });
@@ -72,7 +90,35 @@ export class FormDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   public confirmAdd(): void {
-    this.teachersService.addTeachers(this.proForm.getRawValue());
+    // console.log(this.proForm.value.date);
+    if (this.action === "add") {
+      this.firestore
+        .collection("paymentreport")
+        .add({
+          id: this.teachers.id,
+          date: formatDate(this.proForm.value.date, "yyyy-MM-dd", "en"),
+          accountName: this.proForm.value.accountName,
+          paidAmount: this.proForm.value.paidAmount,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      this.teachersService.addTeachers(this.proForm.getRawValue());
+    } else if (this.action === "edit") {
+      this.firestore
+        .collection("paymentreport")
+        .doc(this.docId)
+        .update({
+          id: this.teachers.id,
+          date: formatDate(this.proForm.value.date, "yyyy-MM-dd", "en"),
+          accountName: this.proForm.value.accountName,
+          paidAmount: this.proForm.value.paidAmount,
+        });
+      this.teachersService.addTeachers(this.proForm.getRawValue());
+    }
   }
 
   ngOnInit(): void {

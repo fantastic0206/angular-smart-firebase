@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Teachers } from './teachers.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AngularFirestore } from "@angular/fire/firestore";
 @Injectable()
 export class TeachersService {
   private readonly API_URL = 'assets/data/usermanagement.json';
@@ -9,7 +10,8 @@ export class TeachersService {
   dataChange: BehaviorSubject<Teachers[]> = new BehaviorSubject<Teachers[]>([]);
   // Temporarily stores data from dialogs
   dialogData: any;
-  constructor(private httpClient: HttpClient) {}
+  userData: any[] = [];
+  constructor(private httpClient: HttpClient, private firestore: AngularFirestore) {}
   get data(): Teachers[] {
     return this.dataChange.value;
   }
@@ -18,16 +20,17 @@ export class TeachersService {
   }
   /** CRUD METHODS */
   getAllTeacherss(): void {
-    this.httpClient.get<Teachers[]>(this.API_URL).subscribe(
-      (data) => {
+    this.firestore
+    .collection("userManagement")
+    .get()
+    .subscribe((ss) => {
+      ss.docs.forEach((doc) => {
+        this.userData.push(doc.data());
+        console.log(this.userData);
         this.isTblLoading = false;
-        this.dataChange.next(data);
-      },
-      (error: HttpErrorResponse) => {
-        this.isTblLoading = false;
-        console.log(error.name + ' ' + error.message);
-      }
-    );
+        this.dataChange.next(this.userData);
+      });
+    });
   }
   addTeachers(teachers: Teachers): void {
     this.dialogData = teachers;

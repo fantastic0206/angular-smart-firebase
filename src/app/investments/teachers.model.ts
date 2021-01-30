@@ -1,7 +1,6 @@
 import { formatDate } from '@angular/common';
 export class Teachers {
   id: number;
-  sno: string;
   date: string;
   clientName: string;
   investedAmount: string;
@@ -11,13 +10,12 @@ export class Teachers {
   constructor(teachers) {
     {
       this.id = teachers.id || this.getRandomID();
-      this.sno = teachers.sno || '';
-      this.date = teachers.date || formatDate(new Date(), 'yyyy-MM-dd', 'en');
+      this.date = formatDate(teachers.date ? teachers.date : new Date(), "yyyy-MM-dd", "en") || formatDate(new Date(), 'yyyy-MM-dd', 'en');
       this.clientName = teachers.clientName || '';
       this.investedAmount = teachers.investedAmount || '';
       this.percentage = teachers.percentage || '';
       this.status = teachers.status || '';
-      this.uniqueID = teachers.uniqueID || '';
+      this.uniqueID = teachers.uniqueID || this.getRandomID();
     }
   }
   public getRandomID(): string {

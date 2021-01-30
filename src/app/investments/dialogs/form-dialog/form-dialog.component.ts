@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Teachers } from '../../teachers.model';
 import { formatDate } from '@angular/common';
+import { AngularFirestore } from "@angular/fire/firestore";
 
 @Component({
   selector: 'app-form-dialog',
@@ -18,20 +19,44 @@ import { formatDate } from '@angular/common';
 export class FormDialogComponent implements OnInit {
   action: string;
   dialogTitle: string;
-  proForm: FormGroup;
   teachers: Teachers;
+  docId: string = "";
+
+  proForm = new FormGroup({
+    date: new FormControl("date"),
+    clientName: new FormControl("clientName"),
+    investedAmount: new FormControl("investedAmount"),
+    percentage: new FormControl("percentage"),
+    status: new FormControl("status"),
+  });
 
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public teachersService: TeachersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private firestore: AngularFirestore
   ) {
     // Set the defaults
     this.action = data.action;
     if (this.action === 'edit') {
       this.dialogTitle = data.teachers.clientName;
       this.teachers = data.teachers;
+      this.firestore
+        .collection("investment", (ref) =>
+          ref
+            .where("clientName", "==", data.teachers.clientName)
+            .where("investedAmount", "==", data.teachers.investedAmount)
+            .where("date", "==", data.teachers.date)
+            .where("status", "==", data.teachers.status)
+            .where("percentage", "==", data.teachers.percentage)
+        )
+        .get()
+        .subscribe((ss) => {
+          ss.docs.forEach((doc) => {
+            this.docId = doc.id;
+          });
+        });
     } else {
       this.dialogTitle = 'New Investment';
       this.teachers = new Teachers({});
@@ -52,7 +77,6 @@ export class FormDialogComponent implements OnInit {
   createContactForm(): FormGroup {
     return this.fb.group({
       id: [this.teachers.id],
-      sno: [this.teachers.sno],
       // email: [
       //   this.teachers.email,
       //   [Validators.required, Validators.email, Validators.minLength(5)],
@@ -75,7 +99,40 @@ export class FormDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   public confirmAdd(): void {
-    this.teachersService.addTeachers(this.proForm.getRawValue());
+    if (this.action === "add") {
+      this.firestore
+        .collection("investment")
+        .add({
+          id: this.teachers.id,
+          date: formatDate(this.proForm.value.date, "yyyy-MM-dd", "en"),
+          clientName: this.proForm.value.clientName,
+          investedAmount: this.proForm.value.investedAmount,
+          percentage: this.proForm.value.percentage,
+          status: this.proForm.value.status,
+          uniqueID: this.teachers.uniqueID
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      this.teachersService.addTeachers(this.proForm.getRawValue());
+    } else if (this.action === "edit") {
+      this.firestore
+        .collection("investment")
+        .doc(this.docId)
+        .update({
+          id: this.teachers.id,
+          date: formatDate(this.proForm.value.date, "yyyy-MM-dd", "en"),
+          clientName: this.proForm.value.clientName,
+          investedAmount: this.proForm.value.investedAmount,
+          percentage: this.proForm.value.percentage,
+          status: this.proForm.value.status,
+          uniqueID: this.teachers.uniqueID
+        });
+      this.teachersService.addTeachers(this.proForm.getRawValue());
+    }
   }
 
   ngOnInit(): void {

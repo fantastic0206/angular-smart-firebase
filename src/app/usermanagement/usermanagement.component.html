@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-4">
                   <ul class="header-buttons">
-                    <li>
+                    <li *ngIf="isAdmin()">
                       <div class="icon-button-demo">
                         <button mat-raised-button color="primary" (click)="addNew()">
                           <mat-icon class="col-white" style="font-size: 16px; padding: 3px;">add</mat-icon>Add
@@ -89,24 +89,24 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
               </ng-container>
-              <ng-container matColumnDef="sno">
-                <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> S.NO
+              <ng-container matColumnDef="date">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> Date
                 </mat-header-cell>
                 <mat-cell mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"
-                class="table-img tbl-col-width-per-6"> {{row.sno}}
+                class="table-img"> {{row.date | date: 'yyyy-MM-dd'}}
                 </mat-cell>
               </ng-container>
-              <ng-container matColumnDef="clientName">
+              <ng-container matColumnDef="fullname">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Client Name
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.clientName}}
+                <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> {{row.fullname}}
                 </mat-cell>
               </ng-container>
-              <ng-container matColumnDef="userName">
+              <ng-container matColumnDef="username">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>User Name
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                  {{row.userName}}</mat-cell>
+                  {{row.username}}</mat-cell>
               </ng-container>
               <ng-container matColumnDef="password">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Password
@@ -134,14 +134,14 @@
               </ng-container>
               <!-- actions -->
               <ng-container matColumnDef="actions">
-                <mat-header-cell class="pr-0" *matHeaderCellDef>Actions
+                <mat-header-cell class="pr-0" *matHeaderCellDef><a *ngIf="isAdmin()">Actions</a>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
-                  <button mat-icon-button color="accent" class="btn-tbl-edit" (click)="$event.stopPropagation()"
+                  <button *ngIf="isAdmin()" mat-icon-button color="accent" class="btn-tbl-edit" (click)="$event.stopPropagation()"
                     (click)="editCall(row)">
                     <mat-icon aria-label="Edit" class="col-white">edit</mat-icon>
                   </button>
-                  <button mat-icon-button color="accent" class="btn-tbl-delete" (click)="$event.stopPropagation()"
+                  <button *ngIf="isAdmin()" mat-icon-button color="accent" class="btn-tbl-delete" (click)="$event.stopPropagation()"
                     (click)="deleteItem(row)">
                     <mat-icon aria-label="Delete" class="col-white">delete</mat-icon>
                   </button>
@@ -150,7 +150,7 @@
               <mat-header-row *matHeaderRowDef="displayedColumns">
               </mat-header-row>
               <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
-              <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
+              <mat-row *matRowDef="let row; columns: displayedColumns;"
                 [style.cursor]="'pointer'" matRipple>
               </mat-row>
             </mat-table>

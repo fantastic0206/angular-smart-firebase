@@ -491,8 +491,8 @@
       (function (Role) {
         Role["All"] = "All";
         Role["Admin"] = "Admin";
-        Role["Teacher"] = "Teacher";
-        Role["Student"] = "Student";
+        Role["Moderator"] = "Moderator";
+        Role["User"] = "User";
       })(Role || (Role = {}));
       /***/
 
@@ -735,9 +735,15 @@
 
         _createClass(AuthGuard, [{
           key: "canActivate",
-          value: function canActivate(next, state) {
+          value: function canActivate(route, state) {
+            var userRole = this.authService.currentUserValue.role;
+
             if (this.authService.isLoggedIn !== true) {
-              this.router.navigate(['authentication/signin']);
+              this.router.navigate(["authentication/signin"]);
+              return false;
+            } else if (route.data.role && route.data.role.indexOf(userRole) === -1) {
+              this.router.navigate(['/authentication/signin']);
+              return false;
             }
 
             return true;
@@ -754,7 +760,7 @@
       AuthGuard.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
         token: AuthGuard,
         factory: AuthGuard.ɵfac,
-        providedIn: 'root'
+        providedIn: "root"
       });
       /*@__PURE__*/
 
@@ -762,7 +768,7 @@
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthGuard, [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
           args: [{
-            providedIn: 'root'
+            providedIn: "root"
           }]
         }], function () {
           return [{
@@ -809,633 +815,694 @@
         role: ['All'],
         submenu: []
       }, // Admin Modules
-      {
-        path: '',
-        title: 'Home',
-        moduleName: 'dashboard',
-        iconType: 'material-icons-two-tone',
-        icon: 'home',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/dashboard/main',
-          title: 'Dashboard 1',
-          moduleName: 'dashboard',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/dashboard/dashboard2',
-          title: 'Dashboard 2',
-          moduleName: 'dashboard',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/dashboard/teacher-dashboard',
-          title: 'Teacher Dashboard',
-          moduleName: 'teacher-dashboard',
-          iconType: 'material-icons-two-tone',
-          icon: '',
-          "class": '',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/dashboard/student-dashboard',
-          title: 'Student Dashboard',
-          moduleName: 'student-dashboard',
-          iconType: 'material-icons-two-tone',
-          icon: '',
-          "class": '',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Teachers',
-        moduleName: 'teachers',
-        iconType: 'material-icons-two-tone',
-        icon: 'person',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/teachers/all-teachers',
-          title: 'All Teachers',
-          moduleName: 'teachers',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/teachers/add-teacher',
-          title: 'Add Teacher',
-          moduleName: 'teachers',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/teachers/edit-teacher',
-          title: 'Edit Teacher',
-          moduleName: 'teachers',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/teachers/about-teacher',
-          title: 'About Teacher',
-          moduleName: 'teachers',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Students',
-        moduleName: 'students',
-        iconType: 'material-icons-two-tone',
-        icon: 'people_alt',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/students/all-students',
-          title: 'All Students',
-          moduleName: 'students',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/students/add-student',
-          title: 'Add Students',
-          moduleName: 'students',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/students/edit-student',
-          title: 'Edit Students',
-          moduleName: 'students',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/students/about-student',
-          title: 'About Students',
-          moduleName: 'students',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Courses',
-        moduleName: 'courses',
-        iconType: 'material-icons-two-tone',
-        icon: 'school',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/courses/all-courses',
-          title: 'All Courses',
-          moduleName: 'courses',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/courses/add-course',
-          title: 'Add Courses',
-          moduleName: 'courses',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/courses/edit-course',
-          title: 'Edit Courses',
-          moduleName: 'courses',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/courses/about-course',
-          title: 'About Courses',
-          moduleName: 'courses',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Library',
-        moduleName: 'library',
-        iconType: 'material-icons-two-tone',
-        icon: 'local_library',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/library/all-assets',
-          title: 'All Library Assets',
-          moduleName: 'library',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/library/add-asset',
-          title: 'Add Library Assets',
-          moduleName: 'library',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/library/edit-asset',
-          title: 'Edit Library Assets',
-          moduleName: 'library',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Departments',
-        moduleName: 'departments',
-        iconType: 'material-icons-two-tone',
-        icon: 'business',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/departments/all-departments',
-          title: 'All Departments',
-          moduleName: 'departments',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/departments/add-department',
-          title: 'Add Department',
-          moduleName: 'departments',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/departments/edit-department',
-          title: 'Edit Department',
-          moduleName: 'departments',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Staff',
-        moduleName: 'staff',
-        iconType: 'material-icons-two-tone',
-        icon: 'face',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/staff/all-staff',
-          title: 'All Staff',
-          moduleName: 'staff',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/staff/add-staff',
-          title: 'Add Staff',
-          moduleName: 'staff',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/staff/edit-staff',
-          title: 'Edit Staff',
-          moduleName: 'staff',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/staff/about-staff',
-          title: 'About Staff',
-          moduleName: 'staff',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Holiday',
-        moduleName: 'holidays',
-        iconType: 'material-icons-two-tone',
-        icon: 'airline_seat_individual_suite',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/holidays/all-holidays',
-          title: 'All Holiday',
-          moduleName: 'holidays',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/holidays/add-holiday',
-          title: 'Add Holiday',
-          moduleName: 'holidays',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/holidays/edit-holiday',
-          title: 'Edit Holiday',
-          moduleName: 'holidays',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Fees',
-        moduleName: 'fees',
-        iconType: 'material-icons-two-tone',
-        icon: 'monetization_on',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/admin/fees/all-fees',
-          title: 'All Fees',
-          moduleName: 'fees',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/fees/add-fees',
-          title: 'Add Fees',
-          moduleName: 'fees',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/fees/edit-fees',
-          title: 'Edit Fees',
-          moduleName: 'fees',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/admin/fees/fee-receipt',
-          title: 'Fees Receipt',
-          moduleName: 'fees',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, // Teacher Modules
-      {
-        path: '/teacher/dashboard',
-        title: 'Dashboard',
-        moduleName: 'dashboard',
-        iconType: 'material-icons-two-tone',
-        icon: 'home',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Teacher'],
-        submenu: []
-      }, {
-        path: '/teacher/lectures',
-        title: 'Lectures',
-        moduleName: 'lectures',
-        iconType: 'material-icons-two-tone',
-        icon: 'menu_book',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Teacher'],
-        submenu: []
-      }, {
-        path: '/teacher/leave-request',
-        title: 'Leave Request',
-        moduleName: 'leave-request',
-        iconType: 'material-icons-two-tone',
-        icon: 'offline_pin',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Teacher'],
-        submenu: []
-      }, {
-        path: '/teacher/exam-schedule',
-        title: 'Exam Schedule',
-        moduleName: 'exam-schedule',
-        iconType: 'material-icons-two-tone',
-        icon: 'history_edu',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Teacher'],
-        submenu: []
-      }, {
-        path: '/teacher/settings',
-        title: 'Settings',
-        moduleName: 'settings',
-        iconType: 'material-icons-two-tone',
-        icon: 'settings',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Teacher'],
-        submenu: []
-      }, // Student Modules
-      {
-        path: '/student/dashboard',
-        title: 'Dashboard',
-        moduleName: 'dashboard',
-        iconType: 'material-icons-two-tone',
-        icon: 'home',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Student'],
-        submenu: []
-      }, {
-        path: '/student/homework',
-        title: 'Homework',
-        moduleName: 'homework',
-        iconType: 'material-icons-two-tone',
-        icon: 'article',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Student'],
-        submenu: []
-      }, {
-        path: '/student/leave-request',
-        title: 'Leave Request',
-        moduleName: 'leave-request',
-        iconType: 'material-icons-two-tone',
-        icon: 'offline_pin',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Student'],
-        submenu: []
-      }, {
-        path: '/student/timetable',
-        title: 'Time Table',
-        moduleName: 'timetable',
-        iconType: 'material-icons-two-tone',
-        icon: 'table_chart',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Student'],
-        submenu: []
-      }, {
-        path: '/student/settings',
-        title: 'Settings',
-        moduleName: 'settings',
-        iconType: 'material-icons-two-tone',
-        icon: 'settings',
-        "class": '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Student'],
-        submenu: []
-      }, // Common Module
+      // {
+      //   path: '',
+      //   title: 'Home',
+      //   moduleName: 'dashboard',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'home',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: [''],
+      //   submenu: [
+      //     {
+      //       path: '/admin/dashboard/main',
+      //       title: 'Dashboard 1',
+      //       moduleName: 'dashboard',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/dashboard/dashboard2',
+      //       title: 'Dashboard 2',
+      //       moduleName: 'dashboard',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/dashboard/teacher-dashboard',
+      //       title: 'Teacher Dashboard',
+      //       moduleName: 'teacher-dashboard',
+      //       iconType: 'material-icons-two-tone',
+      //       icon: '',
+      //       class: '',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/dashboard/student-dashboard',
+      //       title: 'Student Dashboard',
+      //       moduleName: 'student-dashboard',
+      //       iconType: 'material-icons-two-tone',
+      //       icon: '',
+      //       class: '',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Teachers',
+      //   moduleName: 'teachers',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'person',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: [''],
+      //   submenu: [
+      //     {
+      //       path: '/admin/teachers/all-teachers',
+      //       title: 'All Teachers',
+      //       moduleName: 'teachers',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/teachers/add-teacher',
+      //       title: 'Add Teacher',
+      //       moduleName: 'teachers',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/teachers/edit-teacher',
+      //       title: 'Edit Teacher',
+      //       moduleName: 'teachers',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/teachers/about-teacher',
+      //       title: 'About Teacher',
+      //       moduleName: 'teachers',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Students',
+      //   moduleName: 'students',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'people_alt',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Admin'],
+      //   submenu: [
+      //     {
+      //       path: '/admin/students/all-students',
+      //       title: 'All Students',
+      //       moduleName: 'students',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/students/add-student',
+      //       title: 'Add Students',
+      //       moduleName: 'students',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/students/edit-student',
+      //       title: 'Edit Students',
+      //       moduleName: 'students',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/students/about-student',
+      //       title: 'About Students',
+      //       moduleName: 'students',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Courses',
+      //   moduleName: 'courses',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'school',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Admin'],
+      //   submenu: [
+      //     {
+      //       path: '/admin/courses/all-courses',
+      //       title: 'All Courses',
+      //       moduleName: 'courses',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/courses/add-course',
+      //       title: 'Add Courses',
+      //       moduleName: 'courses',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/courses/edit-course',
+      //       title: 'Edit Courses',
+      //       moduleName: 'courses',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/courses/about-course',
+      //       title: 'About Courses',
+      //       moduleName: 'courses',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Library',
+      //   moduleName: 'library',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'local_library',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Admin'],
+      //   submenu: [
+      //     {
+      //       path: '/admin/library/all-assets',
+      //       title: 'All Library Assets',
+      //       moduleName: 'library',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/library/add-asset',
+      //       title: 'Add Library Assets',
+      //       moduleName: 'library',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/library/edit-asset',
+      //       title: 'Edit Library Assets',
+      //       moduleName: 'library',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Departments',
+      //   moduleName: 'departments',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'business',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Admin'],
+      //   submenu: [
+      //     {
+      //       path: '/admin/departments/all-departments',
+      //       title: 'All Departments',
+      //       moduleName: 'departments',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/departments/add-department',
+      //       title: 'Add Department',
+      //       moduleName: 'departments',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/departments/edit-department',
+      //       title: 'Edit Department',
+      //       moduleName: 'departments',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Staff',
+      //   moduleName: 'staff',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'face',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Admin'],
+      //   submenu: [
+      //     {
+      //       path: '/admin/staff/all-staff',
+      //       title: 'All Staff',
+      //       moduleName: 'staff',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/staff/add-staff',
+      //       title: 'Add Staff',
+      //       moduleName: 'staff',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/staff/edit-staff',
+      //       title: 'Edit Staff',
+      //       moduleName: 'staff',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/staff/about-staff',
+      //       title: 'About Staff',
+      //       moduleName: 'staff',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Holiday',
+      //   moduleName: 'holidays',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'airline_seat_individual_suite',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Admin'],
+      //   submenu: [
+      //     {
+      //       path: '/admin/holidays/all-holidays',
+      //       title: 'All Holiday',
+      //       moduleName: 'holidays',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/holidays/add-holiday',
+      //       title: 'Add Holiday',
+      //       moduleName: 'holidays',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/holidays/edit-holiday',
+      //       title: 'Edit Holiday',
+      //       moduleName: 'holidays',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: '',
+      //   title: 'Fees',
+      //   moduleName: 'fees',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'monetization_on',
+      //   class: 'menu-toggle',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Admin'],
+      //   submenu: [
+      //     {
+      //       path: '/admin/fees/all-fees',
+      //       title: 'All Fees',
+      //       moduleName: 'fees',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/fees/add-fees',
+      //       title: 'Add Fees',
+      //       moduleName: 'fees',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/fees/edit-fees',
+      //       title: 'Edit Fees',
+      //       moduleName: 'fees',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: '/admin/fees/fee-receipt',
+      //       title: 'Fees Receipt',
+      //       moduleName: 'fees',
+      //       iconType: '',
+      //       icon: '',
+      //       class: 'ml-menu',
+      //       groupTitle: false,
+      //       badge: '',
+      //       badgeClass: '',
+      //       role: [''],
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
+      // // Teacher Modules
+      // {
+      //   path: '/teacher/dashboard',
+      //   title: 'Dashboard',
+      //   moduleName: 'dashboard',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'home',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Teacher'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/teacher/lectures',
+      //   title: 'Lectures',
+      //   moduleName: 'lectures',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'menu_book',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Teacher'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/teacher/leave-request',
+      //   title: 'Leave Request',
+      //   moduleName: 'leave-request',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'offline_pin',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Teacher'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/teacher/exam-schedule',
+      //   title: 'Exam Schedule',
+      //   moduleName: 'exam-schedule',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'history_edu',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Teacher'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/teacher/settings',
+      //   title: 'Settings',
+      //   moduleName: 'settings',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'settings',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Teacher'],
+      //   submenu: [],
+      // },
+      // // Student Modules
+      // {
+      //   path: '/student/dashboard',
+      //   title: 'Dashboard',
+      //   moduleName: 'dashboard',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'home',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Student'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/student/homework',
+      //   title: 'Homework',
+      //   moduleName: 'homework',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'article',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Student'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/student/leave-request',
+      //   title: 'Leave Request',
+      //   moduleName: 'leave-request',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'offline_pin',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Student'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/student/timetable',
+      //   title: 'Time Table',
+      //   moduleName: 'timetable',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'table_chart',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Student'],
+      //   submenu: [],
+      // },
+      // {
+      //   path: '/student/settings',
+      //   title: 'Settings',
+      //   moduleName: 'settings',
+      //   iconType: 'material-icons-two-tone',
+      //   icon: 'settings',
+      //   class: '',
+      //   groupTitle: false,
+      //   badge: '',
+      //   badgeClass: '',
+      //   role: ['Student'],
+      //   submenu: [],
+      // },
+      // Common Module
       {
         path: '',
         title: '-- Apps',
@@ -1458,7 +1525,7 @@
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['All'],
+        role: ['Admin', 'Moderator'],
         submenu: []
       }, {
         path: 'accounts',
@@ -1470,7 +1537,7 @@
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['All'],
+        role: ['Admin', 'Moderator'],
         submenu: []
       }, {
         path: 'user-management',
@@ -1482,7 +1549,7 @@
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['All'],
+        role: ['Admin', 'Moderator'],
         submenu: []
       }, {
         path: 'investments',
@@ -1494,7 +1561,7 @@
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['All'],
+        role: ['Admin', 'Moderator'],
         submenu: []
       }, {
         path: 'p-l-report',
@@ -1506,7 +1573,7 @@
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['All'],
+        role: ['Admin', 'Moderator'],
         submenu: []
       }, {
         path: 'withdrawal-report',
@@ -1518,7 +1585,7 @@
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['All'],
+        role: ['Admin', 'Moderator'],
         submenu: []
       }, {
         path: 'payments-report',
@@ -1530,7 +1597,7 @@
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['All'],
+        role: ['Admin', 'Moderator'],
         submenu: []
       }, {
         path: 'report',
@@ -1556,992 +1623,6 @@
         badgeClass: '',
         role: ['All'],
         submenu: []
-      }, // {
-      //   path: 'calendar',
-      //   title: 'Calendar',
-      //   moduleName: 'calendar',
-      //   iconType: 'material-icons-two-tone',
-      //   icon: 'event_note',
-      //   class: '',
-      //   groupTitle: false,
-      //   badge: 'New',
-      //   badgeClass: 'badge bg-blue sidebar-badge float-right',
-      //   role: ['All'],
-      //   submenu: [],
-      // },
-      // {
-      //   path: 'task',
-      //   title: 'Task',
-      //   moduleName: 'task',
-      //   iconType: 'material-icons-two-tone',
-      //   icon: 'fact_check',
-      //   class: '',
-      //   groupTitle: false,
-      //   badge: '',
-      //   badgeClass: '',
-      //   role: ['All'],
-      //   submenu: [],
-      // },
-      // {
-      //   path: 'contacts',
-      //   title: 'Contacts',
-      //   moduleName: 'contacts',
-      //   iconType: 'material-icons-two-tone',
-      //   icon: 'contacts',
-      //   class: '',
-      //   groupTitle: false,
-      //   badge: '',
-      //   badgeClass: '',
-      //   role: ['All'],
-      //   submenu: [],
-      // },
-      // {
-      //   path: '',
-      //   title: 'Email',
-      //   moduleName: 'email',
-      //   iconType: 'material-icons-two-tone',
-      //   icon: 'email',
-      //   class: 'menu-toggle',
-      //   groupTitle: false,
-      //   badge: '',
-      //   badgeClass: '',
-      //   role: ['All'],
-      //   submenu: [
-      //     {
-      //       path: '/email/inbox',
-      //       title: 'Inbox',
-      //       moduleName: 'email',
-      //       iconType: '',
-      //       icon: '',
-      //       class: 'ml-menu',
-      //       groupTitle: false,
-      //       badge: '',
-      //       badgeClass: '',
-      //       role: [''],
-      //       submenu: [],
-      //     },
-      //     {
-      //       path: '/email/compose',
-      //       title: 'Compose',
-      //       moduleName: 'email',
-      //       iconType: '',
-      //       icon: '',
-      //       class: 'ml-menu',
-      //       groupTitle: false,
-      //       badge: '',
-      //       badgeClass: '',
-      //       role: [''],
-      //       submenu: [],
-      //     },
-      //     {
-      //       path: '/email/read-mail',
-      //       title: 'Read Email',
-      //       moduleName: 'email',
-      //       iconType: '',
-      //       icon: '',
-      //       class: 'ml-menu',
-      //       groupTitle: false,
-      //       badge: '',
-      //       badgeClass: '',
-      //       role: [''],
-      //       submenu: [],
-      //     },
-      //   ],
-      // },
-      // {
-      //   path: '',
-      //   title: 'More Apps',
-      //   moduleName: 'apps',
-      //   iconType: 'material-icons-two-tone',
-      //   icon: 'stars',
-      //   class: 'menu-toggle',
-      //   groupTitle: false,
-      //   badge: '5',
-      //   badgeClass: 'badge bg-orange sidebar-badge float-right',
-      //   role: ['All'],
-      //   submenu: [
-      //     {
-      //       path: '/apps/chat',
-      //       title: 'Chat',
-      //       moduleName: 'apps',
-      //       iconType: '',
-      //       icon: '',
-      //       class: 'ml-menu',
-      //       groupTitle: false,
-      //       badge: '',
-      //       badgeClass: '',
-      //       role: [''],
-      //       submenu: [],
-      //     },
-      //     {
-      //       path: '/apps/dragdrop',
-      //       title: 'Drag & Drop',
-      //       moduleName: 'apps',
-      //       iconType: '',
-      //       icon: '',
-      //       class: 'ml-menu',
-      //       groupTitle: false,
-      //       badge: '',
-      //       badgeClass: '',
-      //       role: [''],
-      //       submenu: [],
-      //     },
-      //     {
-      //       path: '/apps/contact-grid',
-      //       title: 'Contact Grid',
-      //       moduleName: 'apps',
-      //       iconType: '',
-      //       icon: '',
-      //       class: 'ml-menu',
-      //       groupTitle: false,
-      //       badge: '',
-      //       badgeClass: '',
-      //       role: [''],
-      //       submenu: [],
-      //     },
-      //     {
-      //       path: '/apps/support',
-      //       title: 'Support',
-      //       moduleName: 'apps',
-      //       iconType: '',
-      //       icon: '',
-      //       class: 'ml-menu',
-      //       groupTitle: false,
-      //       badge: '',
-      //       badgeClass: '',
-      //       role: [''],
-      //       submenu: [],
-      //     },
-      // ],
-      // },
-      {
-        path: '',
-        title: 'Widgets',
-        moduleName: 'widget',
-        iconType: 'material-icons-two-tone',
-        icon: 'widgets',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/widget/chart-widget',
-          title: 'Chart Widget',
-          moduleName: 'widget',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/widget/data-widget',
-          title: 'Data Widget',
-          moduleName: 'widget',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: '-- Components',
-        moduleName: '',
-        iconType: '',
-        icon: '',
-        "class": '',
-        groupTitle: true,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: []
-      }, {
-        path: '',
-        title: 'User Interface (UI)',
-        moduleName: 'ui',
-        iconType: 'material-icons-two-tone',
-        icon: 'dvr',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/ui/alerts',
-          title: 'Alerts',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/badges',
-          title: 'Badges',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/chips',
-          title: 'Chips',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/modal',
-          title: 'Modal',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/buttons',
-          title: 'Buttons',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/expansion-panel',
-          title: 'Expansion Panel',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/bottom-sheet',
-          title: 'Bottom Sheet',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/dialogs',
-          title: 'Dialogs',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/cards',
-          title: 'Cards',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/labels',
-          title: 'Labels',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/list-group',
-          title: 'List Group',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/media-object',
-          title: 'Media Object',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/snackbar',
-          title: 'Snackbar',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/preloaders',
-          title: 'Preloaders',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/progressbars',
-          title: 'Progress Bars',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/tabs',
-          title: 'Tabs',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/typography',
-          title: 'Typography',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/ui/helper-classes',
-          title: 'Helper Classes',
-          moduleName: 'ui',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Forms',
-        moduleName: 'forms',
-        iconType: 'material-icons-two-tone',
-        icon: 'subtitles',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/forms/form-controls',
-          title: 'Form Controls',
-          moduleName: 'forms',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/forms/advance-controls',
-          title: 'Advanced Controls',
-          moduleName: 'forms',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/forms/form-example',
-          title: 'Form Examples',
-          moduleName: 'forms',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/forms/form-validation',
-          title: 'Form Validation',
-          moduleName: 'forms',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/forms/wizard',
-          title: 'Form Wizard',
-          moduleName: 'forms',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/forms/editors',
-          title: 'Editors',
-          moduleName: 'forms',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Tables',
-        moduleName: 'tables',
-        iconType: 'material-icons-two-tone',
-        icon: 'view_list',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/tables/basic-tables',
-          title: 'Basic Tables',
-          moduleName: 'tables',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/tables/material-tables',
-          title: 'Material Tables',
-          moduleName: 'tables',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/tables/ngx-datatable',
-          title: 'ngx-datatable',
-          moduleName: 'tables',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Medias',
-        moduleName: 'media',
-        iconType: 'material-icons-two-tone',
-        icon: 'image_search',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/media/gallery',
-          title: 'Image Gallery',
-          moduleName: 'media',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Charts',
-        moduleName: 'charts',
-        iconType: 'material-icons-two-tone',
-        icon: 'insert_chart',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '7',
-        badgeClass: 'badge bg-green sidebar-badge float-right',
-        role: ['Admin'],
-        submenu: [{
-          path: '/charts/echart',
-          title: 'Echart',
-          moduleName: 'charts',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/charts/apex',
-          title: 'Apex',
-          moduleName: 'charts',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/charts/chartjs',
-          title: 'ChartJS',
-          moduleName: 'charts',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/charts/ngx-charts',
-          title: 'Ngx-Charts',
-          moduleName: 'charts',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/charts/gauge',
-          title: 'Gauge',
-          moduleName: 'charts',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Timeline',
-        moduleName: 'timeline',
-        iconType: 'material-icons-two-tone',
-        icon: 'timeline',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/timeline/timeline1',
-          title: 'Timeline 1',
-          moduleName: 'timeline',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/timeline/timeline2',
-          title: 'Timeline 2',
-          moduleName: 'timeline',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Icons',
-        moduleName: 'icons',
-        iconType: 'material-icons-two-tone',
-        icon: 'eco',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/icons/material',
-          title: 'Material Icons',
-          moduleName: 'icons',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/icons/font-awesome',
-          title: 'Font Awesome',
-          moduleName: 'icons',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Authentication',
-        moduleName: 'authentication',
-        iconType: 'material-icons-two-tone',
-        icon: 'supervised_user_circle',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/authentication/signin',
-          title: 'Sign In',
-          moduleName: 'authentication',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/authentication/signup',
-          title: 'Sign Up',
-          moduleName: 'authentication',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/authentication/forgot-password',
-          title: 'Forgot Password',
-          moduleName: 'authentication',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/authentication/locked',
-          title: 'Locked',
-          moduleName: 'authentication',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/authentication/page404',
-          title: '404 - Not Found',
-          moduleName: 'authentication',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/authentication/page500',
-          title: '500 - Server Error',
-          moduleName: 'authentication',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Extra Pages',
-        moduleName: 'extra-pages',
-        iconType: 'material-icons-two-tone',
-        icon: 'description',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/extra-pages/profile',
-          title: 'Profile',
-          moduleName: 'extra-pages',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/extra-pages/pricing',
-          title: 'Pricing',
-          moduleName: 'extra-pages',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/extra-pages/invoice',
-          title: 'Invoice',
-          moduleName: 'extra-pages',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/extra-pages/faqs',
-          title: 'Faqs',
-          moduleName: 'extra-pages',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/extra-pages/blank',
-          title: 'Blank Page',
-          moduleName: 'extra-pages',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Maps',
-        moduleName: 'maps',
-        iconType: 'material-icons-two-tone',
-        icon: 'map',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/maps/google',
-          title: 'Google Map',
-          moduleName: 'maps',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
-      }, {
-        path: '',
-        title: 'Multi level Menu',
-        moduleName: 'multilevel',
-        iconType: 'material-icons-two-tone',
-        icon: 'slideshow',
-        "class": 'menu-toggle',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        role: ['Admin'],
-        submenu: [{
-          path: '/multilevel/first1',
-          title: 'First',
-          moduleName: 'multilevel',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }, {
-          path: '/',
-          title: 'Second',
-          moduleName: 'secondlevel',
-          iconType: '',
-          icon: '',
-          "class": 'ml-sub-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: [{
-            path: '/multilevel/secondlevel/second1',
-            title: 'Second 1',
-            moduleName: 'secondlevel',
-            iconType: '',
-            icon: '',
-            "class": 'ml-sub-sub-menu',
-            groupTitle: false,
-            badge: '',
-            badgeClass: '',
-            role: [''],
-            submenu: []
-          }, {
-            path: '/multilevel/secondlevel/second2',
-            title: 'Second 2',
-            moduleName: 'secondlevel',
-            iconType: '',
-            icon: '',
-            "class": 'ml-sub-sub-menu',
-            groupTitle: false,
-            badge: '',
-            badgeClass: '',
-            role: [''],
-            submenu: []
-          }]
-        }, {
-          path: '/multilevel/first3',
-          title: 'Third',
-          moduleName: 'multilevel',
-          iconType: '',
-          icon: '',
-          "class": 'ml-menu',
-          groupTitle: false,
-          badge: '',
-          badgeClass: '',
-          role: [''],
-          submenu: []
-        }]
       }];
       /***/
     },
@@ -3397,6 +2478,7 @@
         firebase: {
           apiKey: "AIzaSyCZ9sAMa96Oiv-DevXvPjucVcAwK1a2TOw",
           authDomain: "fir-angular-db24a.firebaseapp.com",
+          databaseURL: "https://fir-angular-db24a-default-rtdb.firebaseio.com/",
           projectId: "fir-angular-db24a",
           storageBucket: "fir-angular-db24a.appspot.com",
           messagingSenderId: "929957161334",
@@ -3769,45 +2851,49 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! tslib */
-      "mrSG");
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
       /*! @angular/core */
       "fXoL");
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! @angular/common/http */
       "tk/3");
       /* harmony import */
 
 
-      var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! rxjs */
       "qCKp");
       /* harmony import */
 
 
-      var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @angular/fire/auth */
       "KDZV");
       /* harmony import */
 
 
-      var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! @angular/fire/firestore */
       "mrps");
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/router */
       "tyNb");
+      /* harmony import */
+
+
+      var firebase__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! firebase */
+      "iqUP");
+      /* harmony import */
+
+
+      var firebase__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_6__);
 
       var AuthService = /*#__PURE__*/function () {
         function AuthService(http, afs, afAuth, router, ngZone) {
@@ -3818,45 +2904,30 @@
           this.afAuth = afAuth;
           this.router = router;
           this.ngZone = ngZone;
-          this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
+          this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
           this.currentUser = this.currentUserSubject.asObservable();
         }
 
         _createClass(AuthService, [{
           key: "login",
-          value: function login(username, password) {
+          value: function login(userData) {
             var _this6 = this;
 
-            return this.afAuth.auth.signInWithEmailAndPassword(username, password).then(function (result) {
-              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this6, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var _this7 = this;
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
+            this.currentUser = this.currentUserSubject.asObservable(); // this.currentUserSubject.next(result.user);
 
-                return regeneratorRuntime.wrap(function _callee$(_context) {
-                  while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        _context.next = 2;
-                        return localStorage.setItem('currentUser', JSON.stringify(result.user));
-
-                      case 2:
-                        this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
-                        this.currentUser = this.currentUserSubject.asObservable(); // this.currentUserSubject.next(result.user);
-
-                        this.ngZone.run(function () {
-                          _this7.router.navigate(['dashboard']);
-                        }); // return result.user;
-                        // this.SetUserData(result.user);
-
-                      case 5:
-                      case "end":
-                        return _context.stop();
-                    }
-                  }
-                }, _callee, this);
-              }));
-            })["catch"](function (error) {
-              window.alert(error.message);
-            }); // return this.http
+            if (userData.role === 'Admin' || userData.role === "Moderator") {
+              this.ngZone.run(function () {
+                _this6.router.navigate(['dashboard']);
+              });
+            } else if (userData.role === 'User') {
+              this.ngZone.run(function () {
+                _this6.router.navigate(['report']);
+              });
+            } // return result.user;
+            // this.SetUserData(result.user);
+            // return this.http
             //   .post<any>(`${environment.apiUrl}/authenticate`, {
             //     username,
             //     password,
@@ -3870,25 +2941,26 @@
             //       return user;
             //     })
             //   );
+
           }
         }, {
           key: "userProfile",
           value: function userProfile() {
-            var _this8 = this;
+            var _this7 = this;
 
             this.ngZone.run(function () {
-              _this8.router.navigate(['user-profile']);
+              _this7.router.navigate(['user-profile']);
             });
           }
         }, {
           key: "SignUp",
           value: function SignUp(email, password) {
-            var _this9 = this;
+            var _this8 = this;
 
             return this.afAuth.auth.createUserWithEmailAndPassword(email, password).then(function (result) {
               /* Call the SendVerificaitonMail() function when new user sign
               up and returns promise */
-              _this9.SendVerificationMail();
+              _this8.SendVerificationMail();
 
               localStorage.setItem('currentUser', JSON.stringify(result.user));
             })["catch"](function (error) {
@@ -3896,12 +2968,22 @@
             });
           }
         }, {
+          key: "getUserData",
+          value: function getUserData() {
+            firebase__WEBPACK_IMPORTED_MODULE_6__["auth"]().onAuthStateChanged(function (user) {
+              if (user) {
+                console.log("existed Users", user);
+              } else {// No user is signed in.
+              }
+            });
+          }
+        }, {
           key: "SendVerificationMail",
           value: function SendVerificationMail() {
-            var _this10 = this;
+            var _this9 = this;
 
             return this.afAuth.auth.currentUser.sendEmailVerification().then(function () {
-              _this10.router.navigate(['authentication/verify-email-address']);
+              _this9.router.navigate(['authentication/verify-email-address']);
             });
           }
         }, {
@@ -3916,13 +2998,13 @@
         }, {
           key: "logout",
           value: function logout() {
-            var _this11 = this;
+            var _this10 = this;
 
             // remove user from local storage to log user out
             return this.afAuth.auth.signOut().then(function () {
               localStorage.removeItem('currentUser');
 
-              _this11.router.navigate(['authentication/signin']);
+              _this10.router.navigate(['authentication/signin']);
             });
           }
         }, {
@@ -3942,10 +3024,10 @@
       }();
 
       AuthService.ɵfac = function AuthService_Factory(t) {
-        return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__["AngularFirestore"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_fire_auth__WEBPACK_IMPORTED_MODULE_4__["AngularFireAuth"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]));
+        return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__["AngularFirestore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_fire_auth__WEBPACK_IMPORTED_MODULE_3__["AngularFireAuth"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]));
       };
 
-      AuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({
+      AuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
         token: AuthService,
         factory: AuthService.ɵfac,
         providedIn: 'root'
@@ -3953,22 +3035,22 @@
       /*@__PURE__*/
 
       (function () {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AuthService, [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"],
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthService, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
           args: [{
             providedIn: 'root'
           }]
         }], function () {
           return [{
-            type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+            type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
           }, {
-            type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__["AngularFirestore"]
+            type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_4__["AngularFirestore"]
           }, {
-            type: _angular_fire_auth__WEBPACK_IMPORTED_MODULE_4__["AngularFireAuth"]
+            type: _angular_fire_auth__WEBPACK_IMPORTED_MODULE_3__["AngularFireAuth"]
           }, {
-            type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"]
+            type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
           }, {
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]
           }];
         }, null);
       })();
@@ -4048,7 +3130,7 @@
         password: 'teacher@123',
         firstName: 'Ashton',
         lastName: 'Cox',
-        role: _models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Teacher,
+        role: _models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Moderator,
         token: 'teacher-token'
       }, {
         id: 3,
@@ -4057,7 +3139,7 @@
         password: 'student@123',
         firstName: 'Ashton',
         lastName: 'Cox',
-        role: _models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Student,
+        role: _models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].User,
         token: 'student-token'
       }];
 
@@ -4465,7 +3547,7 @@
 
       var SidebarComponent = /*#__PURE__*/function () {
         function SidebarComponent(document, renderer, elementRef, authService, router) {
-          var _this12 = this;
+          var _this11 = this;
 
           _classCallCheck(this, SidebarComponent);
 
@@ -4482,14 +3564,14 @@
           this.router.events.subscribe(function (event) {
             if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_0__["NavigationEnd"]) {
               if (event.url.split('/')[1] === 'multilevel') {
-                _this12.showMenu = event.url.split('/')[1];
+                _this11.showMenu = event.url.split('/')[1];
               } else {
-                _this12.showMenu = event.url.split('/').slice(-2)[0];
+                _this11.showMenu = event.url.split('/').slice(-2)[0];
               }
 
-              _this12.showSubMenu = event.url.split('/').slice(-2)[0]; // close sidebar on mobile screen after menu select
+              _this11.showSubMenu = event.url.split('/').slice(-2)[0]; // close sidebar on mobile screen after menu select
 
-              _this12.renderer.removeClass(_this12.document.body, 'overlay-open');
+              _this11.renderer.removeClass(_this11.document.body, 'overlay-open');
             }
           });
         }
@@ -4546,10 +3628,10 @@
 
               if (userRole === src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Admin) {
                 this.userType = src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Admin;
-              } else if (userRole === src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Teacher) {
-                this.userType = src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Teacher;
-              } else if (userRole === src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Student) {
-                this.userType = src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Student;
+              } else if (userRole === src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Moderator) {
+                this.userType = src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Moderator;
+              } else if (userRole === src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].User) {
+                this.userType = src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].User;
               } else {
                 this.userType = src_app_core_models_role__WEBPACK_IMPORTED_MODULE_4__["Role"].Admin;
               }
@@ -4958,12 +4040,12 @@
         _createClass(ErrorInterceptor, [{
           key: "intercept",
           value: function intercept(request, next) {
-            var _this13 = this;
+            var _this12 = this;
 
             return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (err) {
               if (err.status === 401) {
                 // auto logout if 401 response returned from api
-                _this13.authenticationService.logout();
+                _this12.authenticationService.logout();
 
                 location.reload(true);
               }
@@ -5051,7 +4133,7 @@
       "Qc9P");
 
       var AppComponent = function AppComponent(_router, location, spinner) {
-        var _this14 = this;
+        var _this13 = this;
 
         _classCallCheck(this, AppComponent);
 
@@ -5060,13 +4142,13 @@
 
         this._router.events.subscribe(function (routerEvent) {
           if (routerEvent instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationStart"]) {
-            _this14.spinner.show();
+            _this13.spinner.show();
 
-            _this14.currentUrl = routerEvent.url.substring(routerEvent.url.lastIndexOf('/') + 1);
+            _this13.currentUrl = routerEvent.url.substring(routerEvent.url.lastIndexOf('/') + 1);
           }
 
           if (routerEvent instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this14.spinner.hide();
+            _this13.spinner.hide();
           }
 
           window.scrollTo(0, 0);
@@ -5147,26 +4229,26 @@
       var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! @angular/fire/firestore */
       "mrps");
+      /* harmony import */
+
+
+      var _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/fire/database */
+      "36mX");
 
       var FirebaseService = /*#__PURE__*/function () {
-        function FirebaseService(afs) {
+        function FirebaseService(afs, db) {
           _classCallCheck(this, FirebaseService);
 
           this.afs = afs;
+          this.db = db;
         }
 
         _createClass(FirebaseService, [{
-          key: "getUsers",
-          value: function getUsers() {
-            var _this15 = this;
-
-            return new Promise(function (resolve, reject) {
-              console.log("firebase.getusers.success");
-
-              _this15.afs.collection('/people').snapshotChanges().subscribe(function (snapshots) {
-                resolve(snapshots);
-              });
-            });
+          key: "getInvestments",
+          value: function getInvestments() {
+            console.log("++++++++investmentdata+++++++", this.db.list('/investments').snapshotChanges());
+            return this.db.list('/investments').snapshotChanges();
           }
         }]);
 
@@ -5174,7 +4256,7 @@
       }();
 
       FirebaseService.ɵfac = function FirebaseService_Factory(t) {
-        return new (t || FirebaseService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"]));
+        return new (t || FirebaseService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_fire_database__WEBPACK_IMPORTED_MODULE_2__["AngularFireDatabase"]));
       };
 
       FirebaseService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -5193,6 +4275,8 @@
         }], function () {
           return [{
             type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"]
+          }, {
+            type: _angular_fire_database__WEBPACK_IMPORTED_MODULE_2__["AngularFireDatabase"]
           }];
         }, null);
       })();
@@ -5368,7 +4452,13 @@
 
       var _core_service_auth_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
       /*! ./core/service/auth.service */
-      "KDUW"); // import { NgxchartComponent } from './charts/ngxchart/ngxchart.component';
+      "KDUW");
+      /* harmony import */
+
+
+      var _core_service_firebase_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
+      /*! ./core/service/firebase.service */
+      "Tw+f"); // import { NgxchartComponent } from './charts/ngxchart/ngxchart.component';
 
 
       var DEFAULT_PERFECT_SCROLLBAR_CONFIG = {
@@ -5402,7 +4492,7 @@
           provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_19__["HTTP_INTERCEPTORS"],
           useClass: _core_interceptor_error_interceptor__WEBPACK_IMPORTED_MODULE_14__["ErrorInterceptor"],
           multi: true
-        }, _core_interceptor_fake_backend__WEBPACK_IMPORTED_MODULE_13__["fakeBackendProvider"], _core_service_auth_service__WEBPACK_IMPORTED_MODULE_24__["AuthService"]],
+        }, _core_interceptor_fake_backend__WEBPACK_IMPORTED_MODULE_13__["fakeBackendProvider"], _core_service_auth_service__WEBPACK_IMPORTED_MODULE_24__["AuthService"], _core_service_firebase_service__WEBPACK_IMPORTED_MODULE_25__["FirebaseService"]],
         imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["BrowserModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_19__["HttpClientModule"], ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_17__["PerfectScrollbarModule"], ng_click_outside__WEBPACK_IMPORTED_MODULE_18__["ClickOutsideModule"], // core & shared
         _core_core_module__WEBPACK_IMPORTED_MODULE_1__["CoreModule"], _shared_shared_module__WEBPACK_IMPORTED_MODULE_2__["SharedModule"], _angular_fire__WEBPACK_IMPORTED_MODULE_20__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_23__["environment"].firebase), _angular_fire_auth__WEBPACK_IMPORTED_MODULE_21__["AngularFireAuthModule"], _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_22__["AngularFirestoreModule"]]]
       });
@@ -5438,7 +4528,7 @@
               provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_19__["HTTP_INTERCEPTORS"],
               useClass: _core_interceptor_error_interceptor__WEBPACK_IMPORTED_MODULE_14__["ErrorInterceptor"],
               multi: true
-            }, _core_interceptor_fake_backend__WEBPACK_IMPORTED_MODULE_13__["fakeBackendProvider"], _core_service_auth_service__WEBPACK_IMPORTED_MODULE_24__["AuthService"]],
+            }, _core_interceptor_fake_backend__WEBPACK_IMPORTED_MODULE_13__["fakeBackendProvider"], _core_service_auth_service__WEBPACK_IMPORTED_MODULE_24__["AuthService"], _core_service_firebase_service__WEBPACK_IMPORTED_MODULE_25__["FirebaseService"]],
             entryComponents: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
           }]
@@ -5945,9 +5035,9 @@
         }, {
           path: 'teacher',
           canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
-          data: {
-            role: _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Teacher
-          },
+          // data: {
+          //   role: Role.Teacher,
+          // },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | teacher-teacher-module */
@@ -5960,9 +5050,9 @@
         }, {
           path: 'student',
           canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
-          data: {
-            role: _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Student
-          },
+          // data: {
+          //   role: Role.Student,
+          // },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | student-student-module */
@@ -5987,6 +5077,10 @@
         }, //===========================//
         {
           path: 'dashboard',
+          canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+          data: {
+            role: [_core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Admin, _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Moderator]
+          },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | dashboard-dashboard-module */
@@ -5998,6 +5092,10 @@
           }
         }, {
           path: 'accounts',
+          canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+          data: {
+            role: [_core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Admin, _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Moderator]
+          },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | accounts-accounts-module */
@@ -6009,6 +5107,10 @@
           }
         }, {
           path: 'user-management',
+          canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+          data: {
+            role: [_core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Admin, _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Moderator]
+          },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | usermanagement-usermanagement-module */
@@ -6020,6 +5122,10 @@
           }
         }, {
           path: 'investments',
+          canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+          data: {
+            role: [_core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Admin, _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Moderator]
+          },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | investments-investments-module */
@@ -6031,6 +5137,10 @@
           }
         }, {
           path: 'p-l-report',
+          canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+          data: {
+            role: [_core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Admin, _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Moderator]
+          },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | plreport-plreport-module */
@@ -6042,6 +5152,10 @@
           }
         }, {
           path: 'withdrawal-report',
+          canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+          data: {
+            role: [_core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Admin, _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Moderator]
+          },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | withdrawalreport-withdrawalreport-module */
@@ -6053,6 +5167,10 @@
           }
         }, {
           path: 'payments-report',
+          canActivate: [_core_guard_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+          data: {
+            role: [_core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Admin, _core_models_role__WEBPACK_IMPORTED_MODULE_6__["Role"].Moderator]
+          },
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | paymentsreport-paymentsreport-module */

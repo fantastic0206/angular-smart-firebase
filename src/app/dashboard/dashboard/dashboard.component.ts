@@ -60,12 +60,7 @@ export class DashboardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnChanges() {
-    console.log("+++", this.reloadflag);
-  }
-
   ngOnInit(): void {
-    this.reloadflag = false;
     this.chart1();
     this.chart2();
   }

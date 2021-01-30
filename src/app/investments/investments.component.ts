@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/core/service/auth.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TeachersService } from './teachers.service';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +16,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { FirebaseService } from '../core/service/firebase.service';
+import { AngularFirestore } from "@angular/fire/firestore";
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -61,7 +63,6 @@ export type barChartOptions = {
 export class InvestmentsComponent implements OnInit {
   displayedColumns = [
     'select',
-    'sno',
     'date',
     'clientName',
     'investedAmount',
@@ -82,16 +83,19 @@ export class InvestmentsComponent implements OnInit {
   public areaChartOptions: Partial<areaChartOptions>;
   public barChartOptions: Partial<barChartOptions>;
 
-  public firebaseService: FirebaseService;
+
 
   proForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     public httpClient: HttpClient,
+    public firebaseService: FirebaseService,
+    public firestore: AngularFirestore,
     public dialog: MatDialog,
     public teachersService: TeachersService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public authService: AuthService
   ) {
     this.proForm = this.fb.group({
       from: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
@@ -104,6 +108,14 @@ export class InvestmentsComponent implements OnInit {
   @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
+
+  userRole = this.authService.currentUserValue['role'];
+
+  isAdmin(): boolean {
+    if(this.userRole == 'Admin') {
+      return true ;
+    }
+  }
 
   onSubmit() {
     console.log('Form Value', this.proForm.value);
@@ -226,7 +238,7 @@ export class InvestmentsComponent implements OnInit {
     );
   }
   public loadData() {
-    this.exampleDatabase = new TeachersService(this.httpClient);
+    this.exampleDatabase = new TeachersService(this.httpClient, this.firestore);
     console.log("exampleDatabase", this.exampleDatabase);
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
@@ -428,9 +440,6 @@ export class ExampleDataSource extends DataSource<Teachers> {
       switch (this._sort.active) {
         case 'id':
           [propertyA, propertyB] = [a.id, b.id];
-          break;
-        case 'sno':
-          [propertyA, propertyB] = [a.sno, b.sno];
           break;
         case 'date':
           [propertyA, propertyB] = [a.date, b.date];

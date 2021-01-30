@@ -41,11 +41,9 @@ export class LockedComponent implements OnInit {
       return;
     } else {
       const role = this.authService.currentUserValue.role;
-      if (role === Role.All || role === Role.Admin) {
+      if (role === Role.All || role === Role.Admin || role === Role.Moderator) {
         this.router.navigate(['/admin/dashboard/main']);
-      } else if (role === Role.Teacher) {
-        this.router.navigate(['/teacher/dashboard']);
-      } else if (role === Role.Student) {
+      } else if (role === Role.User) {
         this.router.navigate(['/student/dashboard']);
       } else {
         this.router.navigate(['/authentication/signin']);

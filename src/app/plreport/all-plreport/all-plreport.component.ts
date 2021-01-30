@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/core/service/auth.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TeachersService } from './teachers.service';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +15,7 @@ import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component
 import { DeleteDialogComponent } from './dialogs/delete/delete.component';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AngularFirestore } from "@angular/fire/firestore";
 
 import {
   ChartComponent,
@@ -75,7 +77,6 @@ export class AllPlreportComponent implements OnInit {
 
   displayedColumns = [
     'select',
-    'sno',
     'date',
     'scriptType',
     'scriptName',
@@ -95,7 +96,9 @@ export class AllPlreportComponent implements OnInit {
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public teachersService: TeachersService,
-    private snackBar: MatSnackBar
+    public firestore: AngularFirestore,
+    private snackBar: MatSnackBar,
+    public authService: AuthService
   ) { }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -104,10 +107,19 @@ export class AllPlreportComponent implements OnInit {
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
 
+  userRole = this.authService.currentUserValue['role'];
+
+  isAdmin(): boolean {
+    if(this.userRole == 'Admin') {
+      return true ;
+    }
+  }
+
   ngOnInit() {
     this.loadData();
     this.chart1();
     this.chart2();
+    this.isAdmin();
   }
 
   private chart1() {
@@ -428,7 +440,7 @@ export class AllPlreportComponent implements OnInit {
     );
   }
   public loadData() {
-    this.exampleDatabase = new TeachersService(this.httpClient);
+    this.exampleDatabase = new TeachersService(this.httpClient, this.firestore);
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
       this.paginator,

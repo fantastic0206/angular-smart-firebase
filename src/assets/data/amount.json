@@ -1,0 +1,69 @@
+{
+  "investments": {
+    "0": {
+      "sno": "1.",
+      "date": "01-01-2021",
+      "clientName": "Gowtham Kumar",
+      "investedAmount": "100000",
+      "percentage": "8",
+      "status": "Active",
+      "uniqueID": "Abc1234"
+    },
+    "1":{
+      "sno": "2.",
+      "date": "01-01-2021",
+      "clientName": "Gowtham Kumar",
+      "investedAmount": "100000",
+      "percentage": "8",
+      "status": "Active",
+      "uniqueID": "Abc1234"
+    },
+    "2":{
+      "sno": "3.",
+      "date": "01-01-2021",
+      "clientName": "Gowtham Kumar",
+      "investedAmount": "100000",
+      "percentage": "8",
+      "status": "Active",
+      "uniqueID": "Abc1234"
+    },
+    "3":{
+      "sno": "4.",
+      "date": "01-01-2021",
+      "clientName": "Gowtham Kumar",
+      "investedAmount": "100000",
+      "percentage": "8",
+      "status": "Active",
+      "uniqueID": "Abc1234"
+    },
+    "4":{
+      "sno": "5.",
+      "date": "01-01-2021",
+      "clientName": "Gowtham Kumar",
+      "investedAmount": "100000",
+      "percentage": "8",
+      "status": "Active",
+      "uniqueID": "Abc1234"
+    }
+  },
+  "accounts": {
+    "0": {
+      "sno": "1.",
+      "date": "01-01-2021",
+      "accountName": "Gowtham Kumar",
+      "tradingClient": "Zerodha",
+      "amount": "1500000",
+      "status": "Active",
+      "flagName": "Account"
+    },
+    "1": {
+      "sno": "2.",
+      "date": "01-01-2021",
+      "accountName": "Besedin",
+      "tradingClient": "Zerodha",
+      "amount": "250000",
+      "status": "Disabled",
+      "flagName": "Account"
+    }
+  }
+}

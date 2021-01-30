@@ -18,20 +18,21 @@
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <mat-label>S.NO</mat-label>
-            <input matInput formControlName="sno" required>
-            <mat-icon matSuffix>note</mat-icon>
-            <mat-error *ngIf="proForm.get('sno').hasError('required')">
-              sno is required
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="proForm.get('date').hasError('required')">
+              Please select date
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>Client Name</mat-label>
-            <input matInput formControlName="clientName" required>
+            <input matInput formControlName="fullname" required>
             <mat-icon matSuffix>face</mat-icon>
-            <mat-error *ngIf="proForm.get('clientName').hasError('required')">
+            <mat-error *ngIf="proForm.get('fullname').hasError('required')">
               Client Name is required
             </mat-error>
           </mat-form-field>
@@ -41,9 +42,9 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>User Name</mat-label>
-            <input matInput formControlName="userName" required>
+            <input matInput formControlName="username" required>
             <mat-icon matSuffix>face</mat-icon>
-            <mat-error *ngIf="proForm.get('userName').hasError('required')">
+            <mat-error *ngIf="proForm.get('username').hasError('required')">
               User Name is required
             </mat-error>
           </mat-form-field>
@@ -91,7 +92,7 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>Role</mat-label>
-            <mat-select formControlName="status" required>
+            <mat-select formControlName="role" required>
               <mat-option [value]="'Admin'">
                 Admin
               </mat-option>
@@ -104,6 +105,16 @@
             </mat-select>
             <mat-error *ngIf="proForm.get('role').hasError('required')">
               Role is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required>
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-error *ngIf="proForm.get('email').hasError('required')">
+              Email is required
             </mat-error>
           </mat-form-field>
         </div>

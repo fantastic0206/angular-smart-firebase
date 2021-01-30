@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Teachers } from './teachers.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AngularFirestore } from "@angular/fire/firestore";
+
+import { FirebaseService } from './../core/service/firebase.service';
+import { AuthService } from 'src/app/core/service/auth.service';
+
 @Injectable()
 export class TeachersService {
   private readonly API_URL = 'assets/data/investments.json';
   isTblLoading = true;
   dataChange: BehaviorSubject<Teachers[]> = new BehaviorSubject<Teachers[]>([]);
+  investData: any[] = [];
+
   // Temporarily stores data from dialogs
   dialogData: any;
-  constructor(private httpClient: HttpClient) {}
+  investments$:Observable<any>;
+  constructor(private httpClient: HttpClient, private firestore: AngularFirestore) {}
   get data(): Teachers[] {
     return this.dataChange.value;
   }
@@ -18,16 +26,29 @@ export class TeachersService {
   }
   /** CRUD METHODS */
   getAllTeacherss(): void {
-    this.httpClient.get<Teachers[]>(this.API_URL).subscribe(
-      (data) => {
+    // this.investments$=this.firebaseService.getInvestments();
+    this.firestore
+    .collection("investment")
+    .get()
+    .subscribe((ss) => {
+      ss.docs.forEach((doc) => {
+        this.investData.push(doc.data());
+        console.log(this.investData);
         this.isTblLoading = false;
-        this.dataChange.next(data);
-      },
-      (error: HttpErrorResponse) => {
-        this.isTblLoading = false;
-        console.log(error.name + ' ' + error.message);
-      }
-    );
+        this.dataChange.next(this.investData);
+      });
+    });
+    // this.httpClient.get<Teachers[]>(this.API_URL).subscribe(
+    //   (data) => {
+    //     console.log("data", data)
+    //     this.isTblLoading = false;
+    //     this.dataChange.next(data);
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     this.isTblLoading = false;
+    //     console.log(error.name + ' ' + error.message);
+    //   }
+    // );
   }
   addTeachers(teachers: Teachers): void {
     this.dialogData = teachers;

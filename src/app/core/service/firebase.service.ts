@@ -3,6 +3,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../../../environments/environment';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +11,12 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 
 export class FirebaseService {
   constructor(
-    public afs: AngularFirestore
+    public afs: AngularFirestore,
+    private db: AngularFireDatabase
   ) { }
-  getUsers(){
-    return new Promise<any>((resolve, reject) => {
-      console.log("firebase.getusers.success");
-      this.afs.collection('/people').snapshotChanges()
-      .subscribe(snapshots => {
-        resolve(snapshots)
-      })
-    })
+  getInvestments(){
+
+    console.log("++++++++investmentdata+++++++",this.db.list('/investments').snapshotChanges());
+    return this.db.list('/investments').snapshotChanges();
   }
 }

@@ -14,6 +14,12 @@ import { DeleteDialogComponent } from './dialogs/delete/delete.component';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { SelectionModel } from '@angular/cdk/collections';
 
+import { AuthService } from 'src/app/core/service/auth.service';
+
+import { AngularFirestore } from "@angular/fire/firestore";
+
+import { formatDate } from '@angular/common';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ChartComponent,
@@ -59,7 +65,6 @@ export type barChartOptions = {
 export class AccountsComponent implements OnInit {
   displayedColumns = [
     'select',
-    'sno',
     'date',
     'accountName',
     'tradingClient',
@@ -69,10 +74,10 @@ export class AccountsComponent implements OnInit {
   ];
   exampleDatabase: TeachersService | null;
   dataSource: ExampleDataSource | null;
-  amountData: any;
   selection = new SelectionModel<Teachers>(true, []);
   id: number;
   teachers: Teachers | null;
+
 
   @ViewChild('chart') chart: ChartComponent;
   public areaChartOptions: Partial<areaChartOptions>;
@@ -85,7 +90,9 @@ export class AccountsComponent implements OnInit {
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public teachersService: TeachersService,
-    private snackBar: MatSnackBar
+    public firestore: AngularFirestore,
+    private snackBar: MatSnackBar,
+    public authService: AuthService
   ) {
     this.proForm = this.fb.group({
       from: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
@@ -99,13 +106,21 @@ export class AccountsComponent implements OnInit {
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
 
+  userRole = this.authService.currentUserValue['role'];
+
+  isAdmin(): boolean {
+    if(this.userRole == 'Admin') {
+      return true ;
+    }
+  }
+
   onSubmit() {
     console.log('Form Value', this.proForm.value);
   }
-
   ngOnInit(): void {
     this.loadData();
     this.chart2();
+    this.isAdmin();
   }
   addNew() {
     const dialogRef = this.dialog.open(FormDialogComponent, {
@@ -219,15 +234,13 @@ export class AccountsComponent implements OnInit {
     );
   }
   public loadData() {
-    this.exampleDatabase = new TeachersService(this.httpClient);
+    this.exampleDatabase = new TeachersService(this.httpClient, this.firestore);
 
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
       this.paginator,
       this.sort,
-      this.amountData
     );
-    console.log("dataSource", this.dataSource);
 
     fromEvent(this.filter.nativeElement, 'keyup').subscribe(() => {
       if (!this.dataSource) {
@@ -367,13 +380,13 @@ export class ExampleDataSource extends DataSource<Teachers> {
   constructor(
     public exampleDatabase: TeachersService,
     public paginator: MatPaginator,
-    public _sort: MatSort,
-    public amountData: any
+    public _sort: MatSort
   ) {
     super();
     // Reset to the first page when the user changes the filter.
     this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
   }
+
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Teachers[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
@@ -423,9 +436,6 @@ export class ExampleDataSource extends DataSource<Teachers> {
       switch (this._sort.active) {
         case 'id':
           [propertyA, propertyB] = [a.id, b.id];
-          break;
-        case 'sno':
-          [propertyA, propertyB] = [a.sno, b.sno];
           break;
         case 'date':
           [propertyA, propertyB] = [a.date, b.date];

@@ -24,18 +24,18 @@ const routes: Routes = [
       {
         path: 'teacher',
         canActivate: [AuthGuard],
-        data: {
-          role: Role.Teacher,
-        },
+        // data: {
+        //   role: Role.Teacher,
+        // },
         loadChildren: () =>
           import('./teacher/teacher.module').then((m) => m.TeacherModule),
       },
       {
         path: 'student',
         canActivate: [AuthGuard],
-        data: {
-          role: Role.Student,
-        },
+        // data: {
+        //   role: Role.Student,
+        // },
         loadChildren: () =>
           import('./student/student.module').then((m) => m.StudentModule),
       },
@@ -49,36 +49,64 @@ const routes: Routes = [
       //===========================//
       {
         path: 'dashboard',
+        canActivate: [AuthGuard],
+        data: {
+          role: [Role.Admin, Role.Moderator],
+        },
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
         path: 'accounts',
+        canActivate: [AuthGuard],
+        data: {
+          role: [Role.Admin, Role.Moderator],
+        },
         loadChildren: () =>
           import('./accounts/accounts.module').then((m) => m.AccountsModule),
       },
       {
         path: 'user-management',
+        canActivate: [AuthGuard],
+        data: {
+          role: [Role.Admin, Role.Moderator],
+        },
         loadChildren: () =>
           import('./usermanagement/usermanagement.module').then((m) => m.UsermanagementModule),
       },
       {
         path: 'investments',
+        canActivate: [AuthGuard],
+        data: {
+          role: [Role.Admin, Role.Moderator],
+        },
         loadChildren: () =>
           import('./investments/investments.module').then((m) => m.InvestmentsModule),
       },
       {
         path: 'p-l-report',
+        canActivate: [AuthGuard],
+        data: {
+          role: [Role.Admin, Role.Moderator],
+        },
         loadChildren: () =>
           import('./plreport/plreport.module').then((m) => m.PlreportModule),
       },
       {
         path: 'withdrawal-report',
+        canActivate: [AuthGuard],
+        data: {
+          role: [Role.Admin, Role.Moderator],
+        },
         loadChildren: () =>
           import('./withdrawalreport/withdrawalreport.module').then((m) => m.WithdrawalreportModule),
       },
       {
         path: 'payments-report',
+        canActivate: [AuthGuard],
+        data: {
+          role: [Role.Admin, Role.Moderator],
+        },
         loadChildren: () =>
           import('./paymentsreport/paymentsreport.module').then((m) => m.PaymentsreportModule),
       },

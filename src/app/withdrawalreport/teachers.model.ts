@@ -1,15 +1,13 @@
 import { formatDate } from '@angular/common';
 export class Teachers {
   id: number;
-  sno: string;
   date: string;
   accountName: string;
   withdrawalAmount: string;
   constructor(teachers) {
     {
       this.id = teachers.id || this.getRandomID();
-      this.sno = teachers.sno || '';
-      this.date = teachers.date || formatDate(new Date(), 'yyyy-MM-dd', 'en');
+      this.date = formatDate(teachers.date ? teachers.date : new Date(), "yyyy-MM-dd", "en") || formatDate(new Date(), 'yyyy-MM-dd', 'en');
       this.accountName = teachers.accountName || '';
       this.withdrawalAmount = teachers.withdrawalAmount || '';
     }

@@ -124,11 +124,7 @@ __webpack_require__.r(__webpack_exports__);
 const _c0 = ["chart"];
 class DashboardComponent {
     constructor() { }
-    ngOnChanges() {
-        console.log("+++", this.reloadflag);
-    }
     ngOnInit() {
-        this.reloadflag = false;
         this.chart1();
         this.chart2();
     }
@@ -339,7 +335,7 @@ DashboardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
     } if (rf & 2) {
         var _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.chart = _t.first);
-    } }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵNgOnChangesFeature"]], decls: 85, vars: 14, consts: [[1, "content", 2, "margin-top", "10px"], [1, "container-fluid"], [1, "block-header"], [1, "row"], [1, "col-xs-12", "col-sm-12", "col-md-12", "col-lg-12"], [1, "breadcrumb", "breadcrumb-style"], [1, "breadcrumb-item"], [1, "page-title"], [1, "breadcrumb-item", "bcrumb-1"], ["routerLink", "/dashboard"], [1, "fas", "fa-home"], [1, "active", 2, "color", "#444444", "padding", "3px 0"], [1, "col-lg-4", "col-sm-6"], [1, "info-box7", "l-bg-purple", "order-info-box7"], [1, "info-box7-block"], [1, "m-b-20"], [1, "text-right"], [1, "fas", "fa-money-bill", "pull-left"], [1, "info-box7", "l-bg-blue", "order-info-box7"], [1, "fas", "fa-business-time", "pull-left"], [1, "info-box7", "l-bg-green", "order-info-box7"], [1, "fas", "fa-money-check", "pull-left"], [1, "fas", "fa-user-check", "pull-left"], [1, "fab", "fa-cc-amazon-pay", "pull-left"], [1, "info-box7", "l-bg-orange", "order-info-box7"], [1, "fas", "fa-users", "pull-left"], [1, "col-xl-6", "col-lg-6", "col-md-12", "col-sm-12"], [1, "card"], [1, "header"], [1, "body"], [3, "series", "chart", "dataLabels", "plotOptions", "yaxis", "xaxis", "fill"]], template: function DashboardComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, decls: 85, vars: 14, consts: [[1, "content", 2, "margin-top", "10px"], [1, "container-fluid"], [1, "block-header"], [1, "row"], [1, "col-xs-12", "col-sm-12", "col-md-12", "col-lg-12"], [1, "breadcrumb", "breadcrumb-style"], [1, "breadcrumb-item"], [1, "page-title"], [1, "breadcrumb-item", "bcrumb-1"], ["routerLink", "/dashboard"], [1, "fas", "fa-home"], [1, "active", 2, "color", "#444444", "padding", "3px 0"], [1, "col-lg-4", "col-sm-6"], [1, "info-box7", "l-bg-purple", "order-info-box7"], [1, "info-box7-block"], [1, "m-b-20"], [1, "text-right"], [1, "fas", "fa-money-bill", "pull-left"], [1, "info-box7", "l-bg-blue", "order-info-box7"], [1, "fas", "fa-business-time", "pull-left"], [1, "info-box7", "l-bg-green", "order-info-box7"], [1, "fas", "fa-money-check", "pull-left"], [1, "fas", "fa-user-check", "pull-left"], [1, "fab", "fa-cc-amazon-pay", "pull-left"], [1, "info-box7", "l-bg-orange", "order-info-box7"], [1, "fas", "fa-users", "pull-left"], [1, "col-xl-6", "col-lg-6", "col-md-12", "col-sm-12"], [1, "card"], [1, "header"], [1, "body"], [3, "series", "chart", "dataLabels", "plotOptions", "yaxis", "xaxis", "fill"]], template: function DashboardComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "section", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);

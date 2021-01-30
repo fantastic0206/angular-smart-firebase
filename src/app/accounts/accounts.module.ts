@@ -28,6 +28,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DeleteDialogComponent } from './dialogs/delete/delete.component';
 import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
 
+
 import { TeachersService } from './teachers.service';
 
 
@@ -59,7 +60,7 @@ import { TeachersService } from './teachers.service';
     MatTabsModule,
     MaterialFileInputModule,
     MatMenuModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule
   ],
   providers: [TeachersService],
 })

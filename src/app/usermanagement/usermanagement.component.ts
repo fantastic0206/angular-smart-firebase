@@ -13,6 +13,8 @@ import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component
 import { DeleteDialogComponent } from './dialogs/delete/delete.component';
 // import { MatMenuTrigger } from '@angular/material/menu';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AngularFirestore } from "@angular/fire/firestore";
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-usermanagement',
@@ -22,9 +24,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class UsermanagementComponent implements OnInit {
     displayedColumns = [
       'select',
-      'sno',
-      'clientName',
-      'userName',
+      'date',
+      'fullname',
+      'username',
       'password',
       'uniqueID',
       'status',
@@ -42,7 +44,9 @@ export class UsermanagementComponent implements OnInit {
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public teachersService: TeachersService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public firestore: AngularFirestore,
+    public authService: AuthService
   ) { }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -52,12 +56,21 @@ export class UsermanagementComponent implements OnInit {
   // contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
 
+  userRole = this.authService.currentUserValue['role'];
+
+  isAdmin(): boolean {
+    if(this.userRole == 'Admin') {
+      return true ;
+    }
+  }
+
   onSubmit() {
     // console.log('Form Value', this.proForm.value);
   }
 
   ngOnInit(): void {
     this.loadData();
+    this.isAdmin();
   }
   addNew() {
     const dialogRef = this.dialog.open(FormDialogComponent, {
@@ -171,7 +184,7 @@ export class UsermanagementComponent implements OnInit {
     );
   }
   public loadData() {
-    this.exampleDatabase = new TeachersService(this.httpClient);
+    this.exampleDatabase = new TeachersService(this.httpClient, this.firestore);
     console.log("exampleDatabase", this.exampleDatabase);
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
@@ -240,8 +253,8 @@ export class ExampleDataSource extends DataSource<Teachers> {
           .slice()
           .filter((teachers: Teachers) => {
             const searchStr = (
-              teachers.clientName +
-              teachers.userName +
+              teachers.fullname +
+              teachers.username +
               teachers.password +
               teachers.uniqueID +
               teachers.status +
@@ -274,14 +287,14 @@ export class ExampleDataSource extends DataSource<Teachers> {
         case 'id':
           [propertyA, propertyB] = [a.id, b.id];
           break;
-        case 'sno':
-          [propertyA, propertyB] = [a.sno, b.sno];
+        case 'date':
+          [propertyA, propertyB] = [a.date, b.date];
           break;
-        case 'clientName':
-          [propertyA, propertyB] = [a.clientName, b.clientName];
+        case 'fullname':
+          [propertyA, propertyB] = [a.fullname, b.fullname];
           break;
-        case 'userName':
-          [propertyA, propertyB] = [a.userName, b.userName];
+        case 'username':
+          [propertyA, propertyB] = [a.username, b.username];
           break;
         case 'password':
           [propertyA, propertyB] = [a.password, b.password];

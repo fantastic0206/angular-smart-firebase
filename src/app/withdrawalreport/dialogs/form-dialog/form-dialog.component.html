@@ -16,7 +16,7 @@
   <div mat-dialog-content>
     <form class="register-form m-4" [formGroup]="proForm" (ngSubmit)="submit">
       <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+        <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>S.NO</mat-label>
             <input matInput formControlName="sno" required>
@@ -25,7 +25,7 @@
               sno is required
             </mat-error>
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>Date</mat-label>
@@ -37,8 +37,6 @@
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-      <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>Account Name</mat-label>
@@ -49,6 +47,8 @@
             </mat-error>
           </mat-form-field>
         </div>
+      </div>
+      <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>Withdrawal Amount</mat-label>

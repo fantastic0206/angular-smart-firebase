@@ -1,12 +1,15 @@
-<div class="auth-container">
+<div
+  class="auth-container"
+  style="background: url(assets/images/sign.jpg); background-size: 90% 100%; background-repeat: no-repeat;"
+>
   <div class="row auth-main">
-    <div class="col-sm-6 px-0 d-none d-sm-block">
-      <div
+    <div class="col-sm-8 px-0 d-none d-sm-block">
+      <!-- <div
         class="left-img"
         style="background-image: url(assets/images/pages/bg-02.png);"
-      ></div>
+      ></div> -->
     </div>
-    <div class="col-sm-6 auth-form-section">
+    <div class="col-sm-4 auth-form-section">
       <div class="form-section">
         <div class="auth-wrapper">
           <h2 class="welcome-msg">Sign Up</h2>
@@ -18,18 +21,44 @@
             [formGroup]="authForm"
             (ngSubmit)="onSubmit()"
           >
-            <!-- <div class="row">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Fullname</mat-label>
+                  <input
+                    matInput
+                    formControlName="fullname"
+                    #fullName
+                    required
+                  />
+                  <mat-icon matSuffix>face</mat-icon>
+                  <mat-error
+                    *ngIf="authForm.get('fullname').hasError('required')"
+                  >
+                    Fullname is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
                   <mat-label>Username</mat-label>
-                  <input matInput formControlName="username" #userName required>
+                  <input
+                    matInput
+                    formControlName="username"
+                    #userName
+                    required
+                  />
                   <mat-icon matSuffix>face</mat-icon>
-                  <mat-error *ngIf="authForm.get('username').hasError('required')">
+                  <mat-error
+                    *ngIf="authForm.get('username').hasError('required')"
+                  >
                     Username is required
                   </mat-error>
                 </mat-form-field>
               </div>
-            </div> -->
+            </div>
             <div class="row">
               <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
@@ -103,8 +132,8 @@
                 color="primary"
                 class="auth-form-btn"
                 [disabled]="!authForm.valid "
-                (click)="authService.SignUp(userEmail.value, userPwd.value)"
-                >
+                type="submit"
+              >
                 Register
               </button>
             </div>

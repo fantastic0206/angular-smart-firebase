@@ -97,10 +97,10 @@ export class SidebarComponent implements OnInit {
       );
       if (userRole === Role.Admin) {
         this.userType = Role.Admin;
-      } else if (userRole === Role.Teacher) {
-        this.userType = Role.Teacher;
-      } else if (userRole === Role.Student) {
-        this.userType = Role.Student;
+      } else if (userRole === Role.Moderator) {
+        this.userType = Role.Moderator;
+      } else if (userRole === Role.User) {
+        this.userType = Role.User;
       } else {
         this.userType = Role.Admin;
       }

@@ -1,19 +1,21 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { TeachersService } from './teachers.service';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { Teachers } from './teachers.model';
-import { DataSource } from '@angular/cdk/collections';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
-import { DeleteDialogComponent } from './dialogs/delete/delete.component';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { SelectionModel } from '@angular/cdk/collections';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from "src/app/core/service/auth.service";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { TeachersService } from "./teachers.service";
+import { HttpClient } from "@angular/common/http";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { Teachers } from "./teachers.model";
+import { DataSource } from "@angular/cdk/collections";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { BehaviorSubject, fromEvent, merge, Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { FormDialogComponent } from "./dialogs/form-dialog/form-dialog.component";
+import { DeleteDialogComponent } from "./dialogs/delete/delete.component";
+import { MatMenuTrigger } from "@angular/material/menu";
+import { SelectionModel } from "@angular/cdk/collections";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import {
   ChartComponent,
@@ -27,7 +29,7 @@ import {
   ApexStroke,
   ApexLegend,
   ApexFill,
-} from 'ng-apexcharts';
+} from "ng-apexcharts";
 export type areaChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -51,20 +53,18 @@ export type barChartOptions = {
   colors: string[];
 };
 
-
 @Component({
-  selector: 'app-paymentsreport',
-  templateUrl: './paymentsreport.component.html',
-  styleUrls: ['./paymentsreport.component.sass']
+  selector: "app-paymentsreport",
+  templateUrl: "./paymentsreport.component.html",
+  styleUrls: ["./paymentsreport.component.sass"],
 })
 export class PaymentsreportComponent implements OnInit {
   displayedColumns = [
-    'select',
-    'sno',
-    'date',
-    'accountName',
-    'paidAmount',
-    'actions',
+    "select",
+    "date",
+    "accountName",
+    "paidAmount",
+    "actions",
   ];
   exampleDatabase: TeachersService | null;
   dataSource: ExampleDataSource | null;
@@ -72,8 +72,7 @@ export class PaymentsreportComponent implements OnInit {
   id: number;
   teachers: Teachers | null;
 
-
-  @ViewChild('chart') chart: ChartComponent;
+  @ViewChild("chart") chart: ChartComponent;
   public areaChartOptions: Partial<areaChartOptions>;
   public barChartOptions: Partial<barChartOptions>;
 
@@ -84,34 +83,45 @@ export class PaymentsreportComponent implements OnInit {
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public teachersService: TeachersService,
-    private snackBar: MatSnackBar
+    public firestore: AngularFirestore,
+    private snackBar: MatSnackBar,
+    public authService: AuthService
   ) {
     this.proForm = this.fb.group({
-      from: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      to: [''],
+      from: ["", [Validators.required, Validators.pattern("[a-zA-Z]+")]],
+      to: [""],
     });
   }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('filter', { static: true }) filter: ElementRef;
+  @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
-  contextMenuPosition = { x: '0px', y: '0px' };
+  contextMenuPosition = { x: "0px", y: "0px" };
+
+  userRole = this.authService.currentUserValue["role"];
+
+  isAdmin(): boolean {
+    if (this.userRole == "Admin") {
+      return true;
+    }
+  }
 
   onSubmit() {
-    console.log('Form Value', this.proForm.value);
+    console.log("Form Value", this.proForm.value);
   }
 
   ngOnInit(): void {
     this.loadData();
     this.chart2();
+    this.isAdmin();
   }
 
   addNew() {
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
         teachers: this.teachers,
-        action: 'add',
+        action: "add",
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -123,10 +133,10 @@ export class PaymentsreportComponent implements OnInit {
         );
         this.refreshTable();
         this.showNotification(
-          'snackbar-success',
-          'Add Record Successfully...!!!',
-          'bottom',
-          'center'
+          "snackbar-success",
+          "Add Record Successfully...!!!",
+          "bottom",
+          "center"
         );
       }
     });
@@ -136,7 +146,7 @@ export class PaymentsreportComponent implements OnInit {
     const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
         teachers: row,
-        action: 'edit',
+        action: "edit",
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -152,10 +162,10 @@ export class PaymentsreportComponent implements OnInit {
         // And lastly refresh table
         this.refreshTable();
         this.showNotification(
-          'black',
-          'Edit Record Successfully...!!!',
-          'bottom',
-          'center'
+          "black",
+          "Edit Record Successfully...!!!",
+          "bottom",
+          "center"
         );
       }
     });
@@ -174,10 +184,10 @@ export class PaymentsreportComponent implements OnInit {
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
         this.showNotification(
-          'snackbar-danger',
-          'Delete Record Successfully...!!!',
-          'bottom',
-          'center'
+          "snackbar-danger",
+          "Delete Record Successfully...!!!",
+          "bottom",
+          "center"
         );
       }
     });
@@ -212,14 +222,14 @@ export class PaymentsreportComponent implements OnInit {
       this.selection = new SelectionModel<Teachers>(true, []);
     });
     this.showNotification(
-      'snackbar-danger',
-      totalSelect + ' Record Delete Successfully...!!!',
-      'bottom',
-      'center'
+      "snackbar-danger",
+      totalSelect + " Record Delete Successfully...!!!",
+      "bottom",
+      "center"
     );
   }
   public loadData() {
-    this.exampleDatabase = new TeachersService(this.httpClient);
+    this.exampleDatabase = new TeachersService(this.httpClient, this.firestore);
     console.log("exampleDatabase", this.exampleDatabase);
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
@@ -227,7 +237,7 @@ export class PaymentsreportComponent implements OnInit {
       this.sort
     );
     console.log("dataSource", this.dataSource);
-    fromEvent(this.filter.nativeElement, 'keyup').subscribe(() => {
+    fromEvent(this.filter.nativeElement, "keyup").subscribe(() => {
       if (!this.dataSource) {
         return;
       }
@@ -235,7 +245,7 @@ export class PaymentsreportComponent implements OnInit {
     });
   }
   showNotification(colorName, text, placementFrom, placementAlign) {
-    this.snackBar.open(text, '', {
+    this.snackBar.open(text, "", {
       duration: 2000,
       verticalPosition: placementFrom,
       horizontalPosition: placementAlign,
@@ -245,8 +255,8 @@ export class PaymentsreportComponent implements OnInit {
   // context menu
   onContextMenu(event: MouseEvent, item: Teachers) {
     event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenuPosition.x = event.clientX + "px";
+    this.contextMenuPosition.y = event.clientY + "px";
     // this.contextMenu.menuData = { item: item };
     // this.contextMenu.menu.focusFirstItem('mouse');
     // this.contextMenu.openMenu();
@@ -256,45 +266,40 @@ export class PaymentsreportComponent implements OnInit {
     this.barChartOptions = {
       series: [
         {
-          name: 'Investment',
+          name: "Investment",
           data: [15000, 2500, 5000, 7000],
         },
       ],
       chart: {
         height: 320,
-        type: 'bar',
+        type: "bar",
         toolbar: {
           show: false,
         },
-        foreColor: '#9aa0ac',
+        foreColor: "#9aa0ac",
       },
       plotOptions: {
         bar: {
           dataLabels: {
-            position: 'top', // top, center, bottom
+            position: "top", // top, center, bottom
           },
         },
       },
       dataLabels: {
         enabled: false,
         formatter: function (val) {
-          return val + '%';
+          return val + "%";
         },
         offsetY: -20,
         style: {
-          fontSize: '12px',
-          colors: ['#9aa0ac'],
+          fontSize: "12px",
+          colors: ["#9aa0ac"],
         },
       },
 
       xaxis: {
-        categories: [
-          'Gowtham',
-          'Divya',
-          'Besedin',
-          'Musthafa'
-        ],
-        position: 'bottom',
+        categories: ["Gowtham", "Divya", "Besedin", "Musthafa"],
+        position: "bottom",
         labels: {
           offsetY: 0,
         },
@@ -306,10 +311,10 @@ export class PaymentsreportComponent implements OnInit {
         },
         crosshairs: {
           fill: {
-            type: 'gradient',
+            type: "gradient",
             gradient: {
-              colorFrom: '#D8E3F0',
-              colorTo: '#BED1E6',
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
               stops: [0, 100],
               opacityFrom: 0.4,
               opacityTo: 0.5,
@@ -322,11 +327,11 @@ export class PaymentsreportComponent implements OnInit {
         },
       },
       fill: {
-        type: 'gradient',
-        colors: ['#4F86F8', '#4F86F8'],
+        type: "gradient",
+        colors: ["#4F86F8", "#4F86F8"],
         gradient: {
-          shade: 'light',
-          type: 'horizontal',
+          shade: "light",
+          type: "horizontal",
           shadeIntensity: 0.25,
           gradientToColors: undefined,
           inverseColors: true,
@@ -345,7 +350,7 @@ export class PaymentsreportComponent implements OnInit {
         labels: {
           show: true,
           formatter: function (val) {
-            return val + '';
+            return val + "";
           },
         },
       },
@@ -353,7 +358,7 @@ export class PaymentsreportComponent implements OnInit {
   }
 }
 export class ExampleDataSource extends DataSource<Teachers> {
-  filterChange = new BehaviorSubject('');
+  filterChange = new BehaviorSubject("");
   get filter(): string {
     return this.filterChange.value;
   }
@@ -409,33 +414,30 @@ export class ExampleDataSource extends DataSource<Teachers> {
   disconnect() {}
   /** Returns a sorted copy of the database data. */
   sortData(data: Teachers[]): Teachers[] {
-    if (!this._sort.active || this._sort.direction === '') {
+    if (!this._sort.active || this._sort.direction === "") {
       return data;
     }
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA: number | string = "";
+      let propertyB: number | string = "";
       switch (this._sort.active) {
-        case 'id':
+        case "id":
           [propertyA, propertyB] = [a.id, b.id];
           break;
-        case 'sno':
-          [propertyA, propertyB] = [a.sno, b.sno];
-          break;
-        case 'date':
+        case "date":
           [propertyA, propertyB] = [a.date, b.date];
           break;
-        case 'accountName':
+        case "accountName":
           [propertyA, propertyB] = [a.accountName, b.accountName];
           break;
-        case 'paidAmount':
+        case "paidAmount":
           [propertyA, propertyB] = [a.paidAmount, b.paidAmount];
           break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
       return (
-        (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
+        (valueA < valueB ? -1 : 1) * (this._sort.direction === "asc" ? 1 : -1)
       );
     });
   }

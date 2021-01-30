@@ -16,16 +16,16 @@
   <div mat-dialog-content>
     <form class="register-form m-4" [formGroup]="proForm" (ngSubmit)="submit">
       <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+        <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>S.NO</mat-label>
-            <input matInput formControlName="sno" required>
+            <input matInput formControlName="sno" required disabled>
             <mat-icon matSuffix>note</mat-icon>
             <mat-error *ngIf="proForm.get('sno')">
               sno is required
             </mat-error>
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
             <mat-label>Date</mat-label>
@@ -37,25 +37,53 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Client Name</mat-label>
+            <input matInput formControlName="clientName" required>
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-error *ngIf="proForm.get('clientName')">
+              Client Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <mat-label>Account Name</mat-label>
-            <input matInput formControlName="accountName" required>
-            <mat-icon matSuffix>face</mat-icon>
-            <mat-error *ngIf="proForm.get('accountName')">
-              Account Name is required
+            <mat-label>Invested Amount</mat-label>
+            <input matInput formControlName="investedAmount" required>
+            <mat-icon matSuffix>money</mat-icon>
+            <mat-error *ngIf="proForm.get('investedAmount')">
+              Invested Amount is required
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <mat-label>Paid Amount</mat-label>
-            <input matInput formControlName="paidAmount" required>
-            <mat-icon matSuffix>money</mat-icon>
-            <mat-error *ngIf="proForm.get('paidAmount')">
-              Paid Amount is required
+            <mat-label>Percentage</mat-label>
+            <input matInput formControlName="percentage" required>
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-error *ngIf="proForm.get('percentage')">
+              Percentage is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>status</mat-label>
+            <mat-select formControlName="status" required>
+              <mat-option [value]="'Active'">
+                Active
+              </mat-option>
+              <mat-option [value]="'Disabled'">
+                Disabled
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="proForm.get('status').hasError('required')">
+              Status is required
             </mat-error>
           </mat-form-field>
         </div>

@@ -1,3 +1,4 @@
+import { FirebaseService } from 'src/app/core/service/firebase.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -30,6 +31,11 @@ import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component
 
 import { TeachersService } from './teachers.service';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../../environments/environment';
+import { AngularFirestore } from "@angular/fire/firestore";
+
 
 @NgModule({
   declarations: [InvestmentsComponent, DeleteDialogComponent, FormDialogComponent],
@@ -60,7 +66,10 @@ import { TeachersService } from './teachers.service';
     MaterialFileInputModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
-  providers: [TeachersService],
+  providers: [TeachersService, FirebaseService],
 })
 export class InvestmentsModule { }

@@ -30,7 +30,7 @@ const users: User[] = [
     password: 'teacher@123',
     firstName: 'Ashton',
     lastName: 'Cox',
-    role: Role.Teacher,
+    role: Role.Moderator,
     token: 'teacher-token',
   },
   {
@@ -40,7 +40,7 @@ const users: User[] = [
     password: 'student@123',
     firstName: 'Ashton',
     lastName: 'Cox',
-    role: Role.Student,
+    role: Role.User,
     token: 'student-token',
   },
 ];
